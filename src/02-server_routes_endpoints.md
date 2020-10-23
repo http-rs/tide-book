@@ -22,23 +22,55 @@ let mut server = tide::new();
 server.listen("127.0.0.1:8080").await?;
 ```
 
-This is the simpelest tide application that you can build but it is not very useful. It will return a 404 HTTP reply for any request. To be able to return anything else we will need to add one or more `Endpoint`s
+This is the simpelest tide application that you can build but it is not very useful. It will only return a 404 HTTP replies. To be able to return anything else we will need to add one or more `Endpoint`s
 
 == Endpoints ==
 
-To make the `Server` return anything other than 404 we need to tell it how to react to requests. We do this
-by adding Endpoints, functions that take a `Request` and return a `Response`.
+To make the `Server` return anything other than a 404 reply we need to tell it how to react to requests. We do this
+by adding one or more Endpoints;
 
 ```rust
 server.at("/").get(|_req| async { Ok("Hello, world!") });
 ```
 
-We use the `at` method to specify where the endpoint is added, the 
+We use the `at` method to specify the route to the endpoint. The endpoint itself is just an async closure. This will work because Tide implements the 'Endpoint' trait for certain async functions with a signature that looks like this.
+
+```rust
+async fn endpoint(request: Request) -> Result<impl Into<Response>>
+```
+
+In this case `Into<Response>` is implemented for `&str` so our closure is a valid Endpoint. Because `Into<Response>` is implemented for several other types you can quickly set up useful endpoints. For example this endpoint uses the `json!` from the `serde_json` crate to return a `serde_json::Value`.
+
+```rust
+server.at("/").get(|req| async {
+    Ok(json!({
+        "meta": { "count": 2 },
+        "animals": [
+            { "type": "cat", "name": "chashu" },
+            { "type": "cat", "name": "nori" }
+        ]
+    }))
+})
+```
+
+Returning quick strings or json results is nice for getting a working endpoint quickly. But for more control a full `Response` struct can be returned.
+
+```rust
+server.at("/").get(|req| async {
+    Ok(Response::new(StatusCode::Ok).set_body("Hello world".into()))
+});
+```
+
+The `Response` is described in more detail in the next chapter.
+
+
+
+
 
 ```rust
 server.at("/").get(endpoint);
 
-async fn endpoint(_req: tide::Request) -> Result {
+async fn endpoint(_req: tide::Request) -> Result<Response> {
     Ok("Hello, world!")
 }
 ```

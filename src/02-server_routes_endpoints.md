@@ -8,27 +8,37 @@ When a `Server` is started it will handle incoming `Request`s by matching their 
 
 A Tide `Server` can simply be constructed with the `new()` constructor.
 ```rust
-use tide::prelude::*
-let mut = Server::new()
+use tide::prelude::*;
+let mut = Server::new();
 ```
 or even shorter by using the `new()` convenience method provided in the `tide` namespace
 ```rust
-let mut server = tide::new()
+let mut server = tide::new();
 ```
 
 The server can then be started using the asynchronous `listen` method.
 ```rust
-let mut server = tide::new()
+let mut server = tide::new();
 server.listen("127.0.0.1:8080").await?;
 ```
 
 This is the simpelest tide application that you can build but it is not very useful. It will return a 404 HTTP reply for any request. To be able to return anything else we will need to add one or more `Endpoint`s
 
-== Endpoint ==
+== Endpoints ==
 
+To make the `Server` return anything other than 404 we need to tell it how to react to requests. We do this
+by adding Endpoints, functions that take a `Request` and return a `Response`.
 
-== Route ==
+```rust
+server.at("/").get(|_req| async { Ok("Hello, world!") });
+```
 
-=== Defining routes ===
+We use the `at` method to specify where the endpoint is added, the 
 
-=== Route parameters ===
+```rust
+server.at("/").get(endpoint);
+
+async fn endpoint(_req: tide::Request) -> Result {
+    Ok("Hello, world!")
+}
+```

@@ -53,7 +53,7 @@ server.at("/").get(|req| async {
 })
 ```
 
-Returning quick strings or json results is nice for getting a working endpoint quickly. But for more control a full `Response` struct can be returned.
+Returning quick string or json results is nice for getting a working endpoint quickly. But for more control a full `Response` struct can be returned.
 
 ```rust
 server.at("/").get(|req| async {
@@ -63,14 +63,20 @@ server.at("/").get(|req| async {
 
 The `Response` is described in more detail in the next chapter.
 
+More than one endpoint can be added by chaining methods. For example if we want to reply to a `delete` request as wel as a `get request endpoints can be added for both;
 
+```rust
+server.at("/")
+    .get(|_req| async { Ok("Hello, world!") })
+    .delete(|_req| async { Ok("Goodbye, cruel world!") });
+```
 
-
+Eventually, especially when our endpoint methods grow a bit, the route definitions will get a crowded. We could move our endpoint implementations to their own functions;
 
 ```rust
 server.at("/").get(endpoint);
 
 async fn endpoint(_req: tide::Request) -> Result<Response> {
-    Ok("Hello, world!")
+    Ok(Response::new(StatusCode::Ok).set_body("Hello world".into()))
 }
 ```

@@ -80,3 +80,11 @@ async fn endpoint(_req: tide::Request) -> Result<Response> {
     Ok(Response::new(StatusCode::Ok).set_body("Hello world".into()))
 }
 ```
+
+TODO: Describe endpoint trait
+
+== Routes ==
+
+TODO: Show defining routes
+TODO: Show composing routes
+TODO: Show dynamic routes with : and *

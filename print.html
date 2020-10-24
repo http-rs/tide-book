@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Tide Book</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Tide Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>Tide is a minimal and pragmatic Rust web application framework built for
+rapid development. It comes with a robust set of features that make building
+async web applications and APIs easier and more fun.</p>
+<h2><a class="header" href="#getting-started" id="getting-started">Getting started</a></h2>
+<p>In order to build a web app in Rust you need an HTTP server, and an async
+runtime. After running <code>cargo init</code> add the following lines to your
+<code>Cargo.toml</code> file:</p>
+<pre><code class="language-toml"># Example, use the version numbers you need
+tide = &quot;0.13.0&quot;
+async-std = { version = &quot;1.6.0&quot;, features = [&quot;attributes&quot;] }
+</code></pre>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<p>Create an HTTP server that receives a JSON body, validates it, and responds
+with a confirmation message.</p>
+<pre><pre class="playground"><code class="language-rust">use tide::Request;
+use tide::prelude::*;
+
+#[derive(Debug, Deserialize)]
+struct Animal {
+    name: String,
+    legs: u8,
+}
+
+#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut app = tide::new();
+    app.at(&quot;/orders/shoes&quot;).post(order_shoes);
+    app.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
+}
+
+async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
+    let Animal { name, legs } = req.body_json().await?;
+    Ok(format!(&quot;Hello, {}! I've put in an order for {} shoes&quot;, name, legs).into())
+}
+</code></pre></pre>
+<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
+Hello, Chashu! I've put in an order for 4 shoes
+
+$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+number too large to fit in target type
+</code></pre>
+<h1><a class="header" href="#the-server-routes-and-endpoints" id="the-server-routes-and-endpoints">The server, Routes and Endpoints</a></h1>
+<p>The central part of a Tide application is the <code>Server</code> struct. A Tide application is started by creating a
+<code>Server</code> and configuring it with <code>Route</code>s to <code>Endpoint</code>s. And then starting it.
+When a <code>Server</code> is started it will handle incoming <code>Request</code>s by matching their URLs with Routes and dispatching every <code>Request</code> to the right <code>Endpoint</code></p>
+<p>== Server ==</p>
+<p>A Tide <code>Server</code> can simply be constructed with the <code>new()</code> constructor.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use tide::prelude::*;
+let mut = Server::new();
+<span class="boring">}
+</span></code></pre></pre>
+<p>or even shorter by using the <code>new()</code> convenience method provided in the <code>tide</code> namespace</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut server = tide::new();
+<span class="boring">}
+</span></code></pre></pre>
+<p>The server can then be started using the asynchronous <code>listen</code> method.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut server = tide::new();
+server.listen(&quot;127.0.0.1:8080&quot;).await?;
+<span class="boring">}
+</span></code></pre></pre>
+<p>This is the simpelest tide application that you can build but it is not very useful. It will only return a 404 HTTP replies. To be able to return anything else we will need to add one or more <code>Endpoint</code>s</p>
+<p>== Endpoints ==</p>
+<p>To make the <code>Server</code> return anything other than a 404 reply we need to tell it how to react to requests. We do this
+by adding one or more Endpoints;</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/&quot;).get(|_req| async { Ok(&quot;Hello, world!&quot;) });
+<span class="boring">}
+</span></code></pre></pre>
+<p>We use the <code>at</code> method to specify the route to the endpoint. The endpoint itself is just an async closure. This will work because Tide implements the 'Endpoint' trait for certain async functions with a signature that looks like this.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn endpoint(request: Request) -&gt; Result&lt;impl Into&lt;Response&gt;&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In this case <code>Into&lt;Response&gt;</code> is implemented for <code>&amp;str</code> so our closure is a valid Endpoint. Because <code>Into&lt;Response&gt;</code> is implemented for several other types you can quickly set up useful endpoints. For example this endpoint uses the <code>json!</code> from the <code>serde_json</code> crate to return a <code>serde_json::Value</code>.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/&quot;).get(|req| async {
+    Ok(json!({
+        &quot;meta&quot;: { &quot;count&quot;: 2 },
+        &quot;animals&quot;: [
+            { &quot;type&quot;: &quot;cat&quot;, &quot;name&quot;: &quot;chashu&quot; },
+            { &quot;type&quot;: &quot;cat&quot;, &quot;name&quot;: &quot;nori&quot; }
+        ]
+    }))
+})
+<span class="boring">}
+</span></code></pre></pre>
+<p>Returning quick string or json results is nice for getting a working endpoint quickly. But for more control a full <code>Response</code> struct can be returned.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/&quot;).get(|req| async {
+    Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
+});
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>Response</code> is described in more detail in the next chapter.</p>
+<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as wel as a `get request endpoints can be added for both;</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/&quot;)
+    .get(|_req| async { Ok(&quot;Hello, world!&quot;) })
+    .delete(|_req| async { Ok(&quot;Goodbye, cruel world!&quot;) });
+<span class="boring">}
+</span></code></pre></pre>
+<p>Eventually, especially when our endpoint methods grow a bit, the route definitions will get a crowded. We could move our endpoint implementations to their own functions;</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/&quot;).get(endpoint);
+
+async fn endpoint(_req: tide::Request) -&gt; Result&lt;Response&gt; {
+    Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>TODO: Describe endpoint trait</p>
+<p>== Routes ==</p>
+<p>TODO: Show defining routes
+TODO: Show composing routes
+TODO: Show dynamic routes with : and *</p>
+<h1><a class="header" href="#request-and-response" id="request-and-response">Request and Response</a></h1>
+<p>We already described how endpoints are essentially functions that take a <code>Request</code> and return a <code>Response</code>. The <code>Request</code> object contains all information about the HTTP request being made, information like the URL that is requested, HTTP headers, cookies, query string parameters can all be found in the <code>Request</code> struct.</p>
+<p>The <code>Request</code> object in Tide is a bit more than just an HTTP request. It is also used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
+<p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While all this can be accessed directly through the <code>Response</code> type. It can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
+<p>== Request ==</p>
+<p>== Response and ResponseBuilder ==</p>
+<h1><a class="header" href="#server-and-request-state" id="server-and-request-state">Server and request state</a></h1>
+<h2><a class="header" href="#server-state" id="server-state">Server State</a></h2>
+<p>Until now endpoints were simple stateless functions that processed a request into a response. But for any serious application we would need to be able to maintain some state somewhere. In a real life application we would need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables to do this.</p>
+<p>Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called <code>State</code>. Because we've been creating <code>Server</code>s with the <code>Server::new</code> factory method so far we have been using <code>Server&lt;()&gt;</code>. But we can pass in our own state struct or enum when creating the Server. This will then be passed into all endpoint handlers through the <code>Request</code>.</p>
+<h1><a class="header" href="#middleware" id="middleware">Middleware</a></h1>
+<h1><a class="header" href="#parsing-and-formatting-json" id="parsing-and-formatting-json">Parsing and formatting JSON</a></h1>
+<h1><a class="header" href="#further-reading" id="further-reading">Further reading</a></h1>
+<p>These articles from the Tide team give a nice peek behind the curtains into the motivations and ideas behind the framework;</p>
+<ul>
+<li><a href="https://rustasync.github.io/team/2018/09/11/tide.html">Rising Tide: building a modular web framework in the open</a></li>
+<li><a href="https://rustasync.github.io/team/2018/10/16/tide-routing.html">Routing and extraction in Tide: a first sketch</a></li>
+<li><a href="https://rustasync.github.io/team/2018/11/07/tide-middleware.html">Middleware in Tide</a></li>
+<li><a href="https://rustasync.github.io/team/2018/11/27/tide-middleware-evolution.html">Tide's evolving middleware approach</a></li>
+<li><a href="https://blog.yoshuawuyts.com/tide/">Tide, the present and future of</a></li>
+<li><a href="https://blog.yoshuawuyts.com/tide-channels/">Tide channels</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

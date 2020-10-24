@@ -161,10 +161,10 @@
                     <main>
                         <h1><a class="header" href="#the-server-routes-and-endpoints" id="the-server-routes-and-endpoints">The server, Routes and Endpoints</a></h1>
 <p>The central part of a Tide application is the <code>Server</code> struct. A Tide application is started by creating a
-<code>Server</code> and configuring it with <code>Route</code>s to <code>Endpoint</code>s. And then starting it.
-When a <code>Server</code> is started it will handle incoming <code>Request</code>s by matching their URLs with Routes and dispatching every <code>Request</code> to the right <code>Endpoint</code></p>
-<p>== Server ==</p>
-<p>A Tide <code>Server</code> can simply be constructed with the <code>new()</code> constructor.</p>
+<code>Server</code> and configuring it with <code>Route</code>s to <code>Endpoint</code>s.
+When a <code>Server</code> is started it will handle incoming <code>Request</code>s by matching their URLs with Routes. Requests that match a route are then  dispatched to the corresponding <code>Endpoint</code>.</p>
+<h2><a class="header" href="#set-up-a-server" id="set-up-a-server">Set up a Server</a></h2>
+<p>A Tide <code>Server</code> can simply be constructed with its <code>new()</code> constructor.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -187,28 +187,27 @@ let mut = Server::new();
 server.listen(&quot;127.0.0.1:8080&quot;).await?;
 <span class="boring">}
 </span></code></pre></pre>
-<p>This is the simpelest tide application that you can build but it is not very useful. It will only return a 404 HTTP replies. To be able to return anything else we will need to add one or more <code>Endpoint</code>s</p>
-<p>== Endpoints ==</p>
-<p>To make the <code>Server</code> return anything other than a 404 reply we need to tell it how to react to requests. We do this
-by adding one or more Endpoints;</p>
+<p>While this is the simpelest Tide application that you can build, it is not very useful. It will return a 404 HTTP response to any request. To be able to return anything useful we will need to handle requests using one or more <code>Endpoint</code>s</p>
+<h2><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with Endpoints</a></h2>
+<p>To make the <code>Server</code> return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>server.at(&quot;/&quot;).get(|_req| async { Ok(&quot;Hello, world!&quot;) });
+</span>server.at(&quot;*&quot;).get(|_req| async { Ok(&quot;Hello, world!&quot;) });
 <span class="boring">}
 </span></code></pre></pre>
-<p>We use the <code>at</code> method to specify the route to the endpoint. The endpoint itself is just an async closure. This will work because Tide implements the 'Endpoint' trait for certain async functions with a signature that looks like this.</p>
+<p>We use the <code>at</code> method to specify the route to the endpoint. We will talk about routes later. For now we'll just use the <code>&quot;*&quot;</code> wildcard route that matches anything we throw at it. For this example we will add an async closure as the <code>Endpoint</code>. Tide expects something that implements the <code>Endpoint</code> trait here. But this closure will work because Tide implements the <code>Endpoint</code> trait for certain async functions with a signature that looks like this;</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>async fn endpoint(request: Request) -&gt; Result&lt;impl Into&lt;Response&gt;&gt;
 <span class="boring">}
 </span></code></pre></pre>
-<p>In this case <code>Into&lt;Response&gt;</code> is implemented for <code>&amp;str</code> so our closure is a valid Endpoint. Because <code>Into&lt;Response&gt;</code> is implemented for several other types you can quickly set up useful endpoints. For example this endpoint uses the <code>json!</code> from the <code>serde_json</code> crate to return a <code>serde_json::Value</code>.</p>
+<p>In this case <code>Into&lt;Response&gt;</code> is implemented for <code>&amp;str</code> so our closure is a valid Endpoint. Because <code>Into&lt;Response&gt;</code> is implemented for several other types you can quickly set up endpoints. For example the next endpoint uses the <code>json!</code> macro from the <code>serde_json</code> crate to return a <code>serde_json::Value</code>.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>server.at(&quot;/&quot;).get(|req| async {
+</span>server.at(&quot;*&quot;).get(|req| async {
     Ok(json!({
         &quot;meta&quot;: { &quot;count&quot;: 2 },
         &quot;animals&quot;: [
@@ -223,17 +222,17 @@ by adding one or more Endpoints;</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>server.at(&quot;/&quot;).get(|req| async {
+</span>server.at(&quot;*&quot;).get(|req| async {
     Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
 });
 <span class="boring">}
 </span></code></pre></pre>
-<p>The <code>Response</code> is described in more detail in the next chapter.</p>
-<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as wel as a `get request endpoints can be added for both;</p>
+<p>The <code>Response</code> type is described in more detail in the next chapter.</p>
+<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as wel as a <code>get</code> request endpoints can be added for both;</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>server.at(&quot;/&quot;)
+</span>server.at(&quot;*&quot;)
     .get(|_req| async { Ok(&quot;Hello, world!&quot;) })
     .delete(|_req| async { Ok(&quot;Goodbye, cruel world!&quot;) });
 <span class="boring">}
@@ -249,11 +248,15 @@ async fn endpoint(_req: tide::Request) -&gt; Result&lt;Response&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>TODO: Describe endpoint trait</p>
-<p>== Routes ==</p>
-<p>TODO: Show defining routes
-TODO: Show composing routes
-TODO: Show dynamic routes with : and *</p>
+<h2><a class="header" href="#set-up-advanced-endpoints-by-implementing-the-endpoint-trait" id="set-up-advanced-endpoints-by-implementing-the-endpoint-trait">Set up advanced endpoints by implementing the <code>Endpoint</code> trait</a></h2>
+<p>TODO</p>
+<h2><a class="header" href="#set-up-simple-routes" id="set-up-simple-routes">Set up simple routes</a></h2>
+<p>The server we build is still pretty lame. It will return the same response to any URL it sees. It is only able to differentiate between requests by HTTP method. But we already used the <code>.at</code> method of the <code>Server</code> to define a wildcard route. You might already have guessed how to define more complicated routes.</p>
+<p>TODO: expand this</p>
+<h2><a class="header" href="#compose-routes" id="compose-routes">Compose routes</a></h2>
+<p>TODO</p>
+<h2><a class="header" href="#match-routes-using-wildcards" id="match-routes-using-wildcards">Match routes using wildcards</a></h2>
+<p>TODO</p>
 
                     </main>
 

@@ -1,22 +1,4 @@
-# Introduction
-
-Tide is a minimal and pragmatic Rust web application framework built for
-rapid development. It comes with a robust set of features that make building
-async web applications and APIs easier and more fun.
-
-## Getting started
-
-In order to build a web app in Rust you need an HTTP server, and an async
-runtime. After running `cargo init` add the following lines to your
-`Cargo.toml` file:
-
-```toml
-# Example, use the version numbers you need
-tide = "0.13.0"
-async-std = { version = "1.6.0", features = ["attributes"] }
-```
-
-## Examples
+# Example
 
 Create an HTTP server that receives a JSON body, validates it, and responds
 with a confirmation message.
@@ -47,8 +29,11 @@ async fn order_shoes(mut req: Request<()>) -> tide::Result {
 
 ```sh
 $ curl localhost:8000/orders/shoes -d '{ "name": "Chashu", "legs": 4 }'
+```
 Hello, Chashu! I've put in an order for 4 shoes
 
+```sh
 $ curl localhost:8000/orders/shoes -d '{ "name": "Mary Millipede", "legs": 750 }'
-number too large to fit in target type
 ```
+number too large to fit in target type
+

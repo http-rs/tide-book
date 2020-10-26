@@ -27,7 +27,7 @@ async fn main() -> tide::Result<()> {
 
 While this is the simpelest Tide application that you can build, it is not very useful. It will return a 404 HTTP response to any request. To be able to return anything useful we will need to handle requests using one or more `Endpoint`s
 
-## Handle requests with Endpoints
+## Handle requests with endpoints
 
 To make the `Server` return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;
 
@@ -101,20 +101,49 @@ async fn endpoint(_req: tide::Request<()>) -> Result<Response> {
 }
 ```
 
-## Set up advanced endpoints by implementing the `Endpoint` trait
+## Defining and composing routes
 
-TODO
+The server we built is still not very useful. It will return the same response for any URL. It is only able to differentiate between requests by HTTP method. We already used the `.at` method of the `Server` to define a wildcard route. You might have guessed how to add endpoints to specific routes;
 
-## Set up simple routes
+```rust,ignore
+#[async_std::main]
+async fn main() -> tide::Result<()> {
+    let mut server = tide::new();
 
-The server we build is still pretty lame. It will return the same response to any URL it sees. It is only able to differentiate between requests by HTTP method. But we already used the `.at` method of the `Server` to define a wildcard route. You might already have guessed how to define more complicated routes.
+    server.at("/hello").get(|_| async { Ok("Hello, world!") });
+    server.at("/bye").get(|_| async { Ok("Bye, world!") });
 
-TODO: expand this
+    server.listen("127.0.0.1:8080").await?;
+    Ok(())
+}
+```
 
-## Compose routes
+Here we added two routes for two different endpoints. Routes can also be composed by chaining the `.at` method.
+```rust
+server.at("/hello").at("world").get(|_| async { Ok("Hello, world!") });
+```
+This will give you the same result as:
+```rust
+server.at("/hello/world").get(|_| async { Ok("Hello, world!") });
+```
 
-TODO
+We can store the partial routes and re-use them;
+```rust
+#[async_std::main]
+async fn main() -> tide::Result<()> {
+    let mut server = tide::new();
 
-## Match routes using wildcards
+    let hello_route = server.at("/hello");
 
+    hello_route.get(|_| async { Ok("Hi!") });
+    hello_route.at("world").get(|_| async { Ok("Hello, world!") });
+    hello_route.at("mum").get(|_| async { Ok("Hi, mum!") });
+
+    server.listen("127.0.0.1:8080").await?;
+    Ok(())
+}
+```
+Here we added two sub-routes to the `hello` route. But we also added an endpoint directly at the `hello` route itself.
+
+## Wildcard routes
 TODO

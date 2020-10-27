@@ -1,0 +1,10 @@
+[package]
+name = "example"
+version = "0.1.0"
+authors = ["Mendelt Siebenga <msiebenga@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+async-std = { version = "1.6.5", features = ["attributes"] }
+serde = {version = "1.0.116", features = ["derive"]}
+tide = "0.14.0"

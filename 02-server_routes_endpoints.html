@@ -180,7 +180,7 @@ async fn main() -&gt; tide::Result&lt;()&gt; {
 }
 </code></pre></pre>
 <p>While this is the simpelest Tide application that you can build, it is not very useful. It will return a 404 HTTP response to any request. To be able to return anything useful we will need to handle requests using one or more <code>Endpoint</code>s</p>
-<h2><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with Endpoints</a></h2>
+<h2><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with endpoints</a></h2>
 <p>To make the <code>Server</code> return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;</p>
 <pre><pre class="playground"><code class="language-rust">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
@@ -247,14 +247,50 @@ async fn endpoint(_req: tide::Request&lt;()&gt;) -&gt; Result&lt;Response&gt; {
     Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
 }
 </code></pre></pre>
-<h2><a class="header" href="#set-up-advanced-endpoints-by-implementing-the-endpoint-trait" id="set-up-advanced-endpoints-by-implementing-the-endpoint-trait">Set up advanced endpoints by implementing the <code>Endpoint</code> trait</a></h2>
-<p>TODO</p>
-<h2><a class="header" href="#set-up-simple-routes" id="set-up-simple-routes">Set up simple routes</a></h2>
-<p>The server we build is still pretty lame. It will return the same response to any URL it sees. It is only able to differentiate between requests by HTTP method. But we already used the <code>.at</code> method of the <code>Server</code> to define a wildcard route. You might already have guessed how to define more complicated routes.</p>
-<p>TODO: expand this</p>
-<h2><a class="header" href="#compose-routes" id="compose-routes">Compose routes</a></h2>
-<p>TODO</p>
-<h2><a class="header" href="#match-routes-using-wildcards" id="match-routes-using-wildcards">Match routes using wildcards</a></h2>
+<h2><a class="header" href="#defining-and-composing-routes" id="defining-and-composing-routes">Defining and composing routes</a></h2>
+<p>The server we built is still not very useful. It will return the same response for any URL. It is only able to differentiate between requests by HTTP method. We already used the <code>.at</code> method of the <code>Server</code> to define a wildcard route. You might have guessed how to add endpoints to specific routes;</p>
+<pre><code class="language-rust ignore">#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut server = tide::new();
+
+    server.at(&quot;/hello&quot;).get(|_| async { Ok(&quot;Hello, world!&quot;) });
+    server.at(&quot;/bye&quot;).get(|_| async { Ok(&quot;Bye, world!&quot;) });
+
+    server.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
+}
+</code></pre>
+<p>Here we added two routes for two different endpoints. Routes can also be composed by chaining the <code>.at</code> method.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/hello&quot;).at(&quot;world&quot;).get(|_| async { Ok(&quot;Hello, world!&quot;) });
+<span class="boring">}
+</span></code></pre></pre>
+<p>This will give you the same result as:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>server.at(&quot;/hello/world&quot;).get(|_| async { Ok(&quot;Hello, world!&quot;) });
+<span class="boring">}
+</span></code></pre></pre>
+<p>We can store the partial routes and re-use them;</p>
+<pre><pre class="playground"><code class="language-rust">#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut server = tide::new();
+
+    let hello_route = server.at(&quot;/hello&quot;);
+
+    hello_route.get(|_| async { Ok(&quot;Hi!&quot;) });
+    hello_route.at(&quot;world&quot;).get(|_| async { Ok(&quot;Hello, world!&quot;) });
+    hello_route.at(&quot;mum&quot;).get(|_| async { Ok(&quot;Hi, mum!&quot;) });
+
+    server.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
+}
+</code></pre></pre>
+<p>Here we added two sub-routes to the <code>hello</code> route. But we also added an endpoint directly at the <code>hello</code> route itself.</p>
+<h2><a class="header" href="#wildcard-routes" id="wildcard-routes">Wildcard routes</a></h2>
 <p>TODO</p>
 
                     </main>

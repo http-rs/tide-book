@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,15 +165,15 @@
 <p>Tide is a minimal and pragmatic Rust web application framework built for
 rapid development. It comes with a robust set of features that make building
 async web applications and APIs easier and more fun.</p>
-<h2><a class="header" href="#getting-started" id="getting-started">Getting started</a></h2>
+<h1><a class="header" href="#getting-started" id="getting-started">Getting started</a></h1>
 <p>In order to build a web app in Rust you need an HTTP server, and an async
-runtime. After running <code>cargo init</code> add the following lines to your
+runtime. After running <code>cargo new --bin web-app</code> add the following lines to your
 <code>Cargo.toml</code> file:</p>
 <pre><code class="language-toml"># Example, use the version numbers you need
-tide = &quot;0.13.0&quot;
-async-std = { version = &quot;1.6.0&quot;, features = [&quot;attributes&quot;] }
+tide = &quot;0.14.0&quot;
+async-std = { version = &quot;1.6.5&quot;, features = [&quot;attributes&quot;] }
 </code></pre>
-<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<h1><a class="header" href="#example" id="example">Example</a></h1>
 <p>Create an HTTP server that receives a JSON body, validates it, and responds
 with a confirmation message.</p>
 <pre><pre class="playground"><code class="language-rust">use tide::Request;
@@ -199,11 +199,11 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
 }
 </code></pre></pre>
 <pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
-Hello, Chashu! I've put in an order for 4 shoes
-
-$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
-number too large to fit in target type
 </code></pre>
+<p>Hello, Chashu! I've put in an order for 4 shoes</p>
+<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+</code></pre>
+<p>number too large to fit in target type</p>
 <h1><a class="header" href="#the-server-routes-and-endpoints" id="the-server-routes-and-endpoints">The server, Routes and Endpoints</a></h1>
 <p>The central part of a Tide application is the <code>Server</code> struct. A Tide application is started by creating a
 <code>Server</code> and configuring it with <code>Route</code>s to <code>Endpoint</code>s.

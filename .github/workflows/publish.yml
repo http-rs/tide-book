@@ -2,6 +2,7 @@ name: Publish github.io
 
 on:
   push:
+    branch: master
 
 env:
   CARGO_TERM_COLOR: always

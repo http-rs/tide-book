@@ -1,6 +1,6 @@
 // ANCHOR: example
-use tide::Request;
 use tide::prelude::*;
+use tide::Request;
 
 #[derive(Debug, Deserialize)]
 struct Animal {

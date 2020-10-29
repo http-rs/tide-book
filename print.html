@@ -176,8 +176,8 @@ async-std = { version = &quot;1.6.5&quot;, features = [&quot;attributes&quot;] }
 <h1><a class="header" href="#example" id="example">Example</a></h1>
 <p>Create an HTTP server that receives a JSON body, validates it, and responds
 with a confirmation message.</p>
-<pre><pre class="playground"><code class="language-rust edition2018">use tide::Request;
-use tide::prelude::*;
+<pre><pre class="playground"><code class="language-rust edition2018">use tide::prelude::*;
+use tide::Request;
 
 #[derive(Debug, Deserialize)]
 struct Animal {
@@ -197,6 +197,7 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
     let Animal { name, legs } = req.body_json().await?;
     Ok(format!(&quot;Hello, {}! I've put in an order for {} shoes&quot;, name, legs).into())
 }
+// ANCHOR END: example
 </code></pre></pre>
 <pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
 </code></pre>

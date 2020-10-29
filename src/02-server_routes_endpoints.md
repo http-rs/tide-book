@@ -143,7 +143,30 @@ async fn main() -> tide::Result<()> {
     Ok(())
 }
 ```
-Here we added two sub-routes to the `hello` route. But we also added an endpoint directly at the `hello` route itself.
+Here we added two sub-routes to the `hello` route. One at `/hello/world` and another one at `hello/mum` with different endpoint functions. We also added an endpoint at `/hello`. This gives an idea what it will be like to build up more complex routing trees
+
+When you have a complex api this also allows you to define different pieces of your route tree in separate functions.
+```rust
+#[async_std::main]
+async fn main() -> tide::Result<()> {
+    let mut server = tide::new();
+
+    set_v1_routes(server.at("/api/v1"));
+    set_v2_routes(server.at("/api/v2"));
+
+    server.listen("127.0.0.1:8080").await?;
+    Ok(())
+}
+
+fn v1_routes(route: Route) {
+    route.at("version").get(|_| async { Ok("Version one") });
+}
+
+fn v2_routes(route: Route) {
+    route.at("version").get(|_| async { Ok("Version two") });
+}
+```
+This example shows for example an API that exposes two different versions. The routes for each version are defined in a separate function.
 
 ## Wildcard routes
 TODO

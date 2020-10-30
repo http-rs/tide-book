@@ -91,7 +91,7 @@ Eventually, especially when our endpoint methods grow a bit, the route definitio
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();
-    server.at("/").get(endpoint);
+    server.at("*").get(endpoint);
     server.listen("127.0.0.1:8080").await?;
     Ok(())
 }
@@ -168,5 +168,15 @@ fn v2_routes(route: Route) {
 ```
 This example shows for example an API that exposes two different versions. The routes for each version are defined in a separate function.
 
-## Wildcard routes
-TODO
+## Wildcards
+There are two wildcard characters we can use `:` and `*`. We already met the `*` wildcard. We used it in the first couple of endpoint examples.
+Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. `:` will match exactly one segment while '*' will match one or more segments.
+
+"/foo/*/baz" for example will match against "/foo/bar/baz" or "/foo/bar/qux/baz"
+
+"foo/:/baz" will match "/foo/bar/baz" but not "/foo/bar/qux/baz", the latter has two segments between foo and baz, while `:` only matches single segments.
+
+### Wildcard precedence
+When using wildcards it is possible to define multiple different routes that match the same path.
+
+The routes `"/some/*"` and `"/some/specific/*"` will both match the path `"/some/specific/route"` for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the `"/some/specific/*"` route will match the path.

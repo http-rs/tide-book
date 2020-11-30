@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -284,7 +284,7 @@ async fn main() -&gt; tide::Result&lt;()&gt; {
 <pre><pre class="playground"><code class="language-rust edition2018">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
     let mut server = tide::new();
-    server.at(&quot;/&quot;).get(endpoint);
+    server.at(&quot;*&quot;).get(endpoint);
     server.listen(&quot;127.0.0.1:8080&quot;).await?;
     Ok(())
 }
@@ -357,20 +357,40 @@ fn v2_routes(route: Route) {
 }
 </code></pre></pre>
 <p>This example shows for example an API that exposes two different versions. The routes for each version are defined in a separate function.</p>
-<h2><a class="header" href="#wildcard-routes" id="wildcard-routes">Wildcard routes</a></h2>
-<p>TODO</p>
+<h2><a class="header" href="#wildcards" id="wildcards">Wildcards</a></h2>
+<p>There are two wildcard characters we can use <code>:</code> and <code>*</code>. We already met the <code>*</code> wildcard. We used it in the first couple of endpoint examples.
+Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. <code>:</code> will match exactly one segment while '*' will match one or more segments.</p>
+<p>&quot;/foo/*/baz&quot; for example will match against &quot;/foo/bar/baz&quot; or &quot;/foo/bar/qux/baz&quot;</p>
+<p>&quot;foo/:/baz&quot; will match &quot;/foo/bar/baz&quot; but not &quot;/foo/bar/qux/baz&quot;, the latter has two segments between foo and baz, while <code>:</code> only matches single segments.</p>
+<h3><a class="header" href="#wildcard-precedence" id="wildcard-precedence">Wildcard precedence</a></h3>
+<p>When using wildcards it is possible to define multiple different routes that match the same path.</p>
+<p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>
 <h1><a class="header" href="#request-and-response" id="request-and-response">Request and Response</a></h1>
-<p>We already described how endpoints are essentially functions that take a <code>Request</code> and return a <code>Response</code>. The <code>Request</code> object contains all information about the HTTP request being made, information like the URL that is requested, HTTP headers, cookies, query string parameters can all be found in the <code>Request</code> struct.</p>
-<p>The <code>Request</code> object in Tide is a bit more than just an HTTP request. It is also used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
-<p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While all this can be accessed directly through the <code>Response</code> type. It can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
-<p>== Request ==</p>
-<p>== Response and ResponseBuilder ==</p>
+<p>In the previous chapter we saw how endpoints are functions that take a <code>Request</code> and return a <code>Response</code>, or more accurately a <code>Result</code> enum with a type that can be turned into a <code>Response</code></p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn endpoint(request: tide::Request) -&gt; tide::Result&lt;impl Into&lt;Response&gt;&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>Request</code> object contains all the information from the HTTP request that was received by the server. The URL from the request, HTTP headers, cookies and query string parameters can all be found in the <code>Request</code>.
+Additionally the <code>Request</code> object in Tide is used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
+<p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While the <code>Response</code> struct can be created, accessed and modified directly, it can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
+<h2><a class="header" href="#request" id="request">Request</a></h2>
+<h3><a class="header" href="#request-body" id="request-body">Request body</a></h3>
+<h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
+<h3><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h3>
+<h3><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h3>
+<h2><a class="header" href="#response-and-the-responsebuilder" id="response-and-the-responsebuilder">Response and the ResponseBuilder</a></h2>
 <h1><a class="header" href="#server-and-request-state" id="server-and-request-state">Server and request state</a></h1>
 <h2><a class="header" href="#server-state" id="server-state">Server State</a></h2>
 <p>Until now endpoints were simple stateless functions that processed a request into a response. But for any serious application we would need to be able to maintain some state somewhere. In a real life application we would need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables to do this.</p>
 <p>Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called <code>State</code>. Because we've been creating <code>Server</code>s with the <code>Server::new</code> factory method so far we have been using <code>Server&lt;()&gt;</code>. But we can pass in our own state struct or enum when creating the Server. This will then be passed into all endpoint handlers through the <code>Request</code>.</p>
 <h1><a class="header" href="#middleware" id="middleware">Middleware</a></h1>
-<h1><a class="header" href="#parsing-and-formatting-json" id="parsing-and-formatting-json">Parsing and formatting JSON</a></h1>
+<h1><a class="header" href="#testing" id="testing">Testing</a></h1>
+<h2><a class="header" href="#testing-endpoints" id="testing-endpoints">Testing endpoints</a></h2>
+<h2><a class="header" href="#testing-routes" id="testing-routes">Testing routes</a></h2>
+<h2><a class="header" href="#middleware-testing" id="middleware-testing">Middleware testing</a></h2>
 <h1><a class="header" href="#further-reading" id="further-reading">Further reading</a></h1>
 <p>These articles from the Tide team give a nice peek behind the curtains into the motivations and ideas behind the framework;</p>
 <ul>

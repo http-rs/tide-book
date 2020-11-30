@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html" class="active"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html" class="active"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -238,7 +238,7 @@ async fn main() -&gt; tide::Result&lt;()&gt; {
 <pre><pre class="playground"><code class="language-rust edition2018">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
     let mut server = tide::new();
-    server.at(&quot;/&quot;).get(endpoint);
+    server.at(&quot;*&quot;).get(endpoint);
     server.listen(&quot;127.0.0.1:8080&quot;).await?;
     Ok(())
 }
@@ -311,8 +311,14 @@ fn v2_routes(route: Route) {
 }
 </code></pre></pre>
 <p>This example shows for example an API that exposes two different versions. The routes for each version are defined in a separate function.</p>
-<h2><a class="header" href="#wildcard-routes" id="wildcard-routes">Wildcard routes</a></h2>
-<p>TODO</p>
+<h2><a class="header" href="#wildcards" id="wildcards">Wildcards</a></h2>
+<p>There are two wildcard characters we can use <code>:</code> and <code>*</code>. We already met the <code>*</code> wildcard. We used it in the first couple of endpoint examples.
+Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. <code>:</code> will match exactly one segment while '*' will match one or more segments.</p>
+<p>&quot;/foo/*/baz&quot; for example will match against &quot;/foo/bar/baz&quot; or &quot;/foo/bar/qux/baz&quot;</p>
+<p>&quot;foo/:/baz&quot; will match &quot;/foo/bar/baz&quot; but not &quot;/foo/bar/qux/baz&quot;, the latter has two segments between foo and baz, while <code>:</code> only matches single segments.</p>
+<h3><a class="header" href="#wildcard-precedence" id="wildcard-precedence">Wildcard precedence</a></h3>
+<p>When using wildcards it is possible to define multiple different routes that match the same path.</p>
+<p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>
 
                     </main>
 

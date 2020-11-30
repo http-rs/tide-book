@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html" class="active"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-json.html"><strong aria-hidden="true">6.</strong> Parsing and formatting JSON</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html" class="active"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -160,11 +160,22 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#request-and-response" id="request-and-response">Request and Response</a></h1>
-<p>We already described how endpoints are essentially functions that take a <code>Request</code> and return a <code>Response</code>. The <code>Request</code> object contains all information about the HTTP request being made, information like the URL that is requested, HTTP headers, cookies, query string parameters can all be found in the <code>Request</code> struct.</p>
-<p>The <code>Request</code> object in Tide is a bit more than just an HTTP request. It is also used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
-<p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While all this can be accessed directly through the <code>Response</code> type. It can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
-<p>== Request ==</p>
-<p>== Response and ResponseBuilder ==</p>
+<p>In the previous chapter we saw how endpoints are functions that take a <code>Request</code> and return a <code>Response</code>, or more accurately a <code>Result</code> enum with a type that can be turned into a <code>Response</code></p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>async fn endpoint(request: tide::Request) -&gt; tide::Result&lt;impl Into&lt;Response&gt;&gt;
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>Request</code> object contains all the information from the HTTP request that was received by the server. The URL from the request, HTTP headers, cookies and query string parameters can all be found in the <code>Request</code>.
+Additionally the <code>Request</code> object in Tide is used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
+<p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While the <code>Response</code> struct can be created, accessed and modified directly, it can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
+<h2><a class="header" href="#request" id="request">Request</a></h2>
+<h3><a class="header" href="#request-body" id="request-body">Request body</a></h3>
+<h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
+<h3><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h3>
+<h3><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h3>
+<h2><a class="header" href="#response-and-the-responsebuilder" id="response-and-the-responsebuilder">Response and the ResponseBuilder</a></h2>
 
                     </main>
 

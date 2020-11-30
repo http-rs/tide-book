@@ -7,6 +7,6 @@
 - [Request and Response](./03-request-response.md)
 - [Server and request state](./04-state.md)
 - [Middleware](./05-middleware.md)
-- [Parsing and formatting JSON](./06-json.md)
+- [Testing](./06-testing.md)
 
 - [Further reading](./a-further-reading.md)

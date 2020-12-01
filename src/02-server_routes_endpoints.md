@@ -172,9 +172,13 @@ This example shows for example an API that exposes two different versions. The r
 There are two wildcard characters we can use `:` and `*`. We already met the `*` wildcard. We used it in the first couple of endpoint examples.
 Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. `:` will match exactly one segment while '*' will match one or more segments.
 
-"/foo/*/baz" for example will match against "/foo/bar/baz" or "/foo/bar/qux/baz"
+`"/foo/*/baz"` for example will match against `"/foo/bar/baz"` or `"/foo/bar/qux/baz"`
 
 "foo/:/baz" will match "/foo/bar/baz" but not "/foo/bar/qux/baz", the latter has two segments between foo and baz, while `:` only matches single segments.
+
+### Naming wildcards
+It is also possible to name wildcards. This allows you to query the specific strings the wildcard matched on. For example `"/:bar/*baz"` 
+will match the string `"/one/two/three"`. You can then query which wildcards matched which parts of the string. In this case `bar` matched `one` while `baz` matched `two/three`. We'll see how you can use this to parse parameters from urls in the next chapter.
 
 ### Wildcard precedence
 When using wildcards it is possible to define multiple different routes that match the same path.

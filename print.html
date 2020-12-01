@@ -170,7 +170,7 @@ async web applications and APIs easier and more fun.</p>
 runtime. After running <code>cargo new --bin web-app</code> add the following lines to your
 <code>Cargo.toml</code> file:</p>
 <pre><code class="language-toml"># Example, use the version numbers you need
-tide = &quot;0.14.0&quot;
+tide = &quot;0.15.0&quot;
 async-std = { version = &quot;1.6.5&quot;, features = [&quot;attributes&quot;] }
 </code></pre>
 <h1><a class="header" href="#example" id="example">Example</a></h1>
@@ -360,8 +360,11 @@ fn v2_routes(route: Route) {
 <h2><a class="header" href="#wildcards" id="wildcards">Wildcards</a></h2>
 <p>There are two wildcard characters we can use <code>:</code> and <code>*</code>. We already met the <code>*</code> wildcard. We used it in the first couple of endpoint examples.
 Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. <code>:</code> will match exactly one segment while '*' will match one or more segments.</p>
-<p>&quot;/foo/*/baz&quot; for example will match against &quot;/foo/bar/baz&quot; or &quot;/foo/bar/qux/baz&quot;</p>
+<p><code>&quot;/foo/*/baz&quot;</code> for example will match against <code>&quot;/foo/bar/baz&quot;</code> or <code>&quot;/foo/bar/qux/baz&quot;</code></p>
 <p>&quot;foo/:/baz&quot; will match &quot;/foo/bar/baz&quot; but not &quot;/foo/bar/qux/baz&quot;, the latter has two segments between foo and baz, while <code>:</code> only matches single segments.</p>
+<h3><a class="header" href="#naming-wildcards" id="naming-wildcards">Naming wildcards</a></h3>
+<p>It is also possible to name wildcards. This allows you to query the specific strings the wildcard matched on. For example <code>&quot;/:bar/*baz&quot;</code> 
+will match the string <code>&quot;/one/two/three&quot;</code>. You can then query which wildcards matched which parts of the string. In this case <code>bar</code> matched <code>one</code> while <code>baz</code> matched <code>two/three</code>. We'll see how you can use this to parse parameters from urls in the next chapter.</p>
 <h3><a class="header" href="#wildcard-precedence" id="wildcard-precedence">Wildcard precedence</a></h3>
 <p>When using wildcards it is possible to define multiple different routes that match the same path.</p>
 <p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>

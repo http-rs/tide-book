@@ -1,4 +1,6 @@
 [workspace]
 members = [
   "ch01-02-example",
+
+  "ch03-request-response",
 ]

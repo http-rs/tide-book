@@ -173,9 +173,12 @@ struct Animal {
 
 #[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
+    tide::log::start();
     let mut app = tide::new();
+
     app.at(&quot;/orders/shoes&quot;).post(order_shoes);
     app.listen(&quot;127.0.0.1:8080&quot;).await?;
+
     Ok(())
 }
 

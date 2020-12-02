@@ -187,9 +187,12 @@ struct Animal {
 
 #[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
+    tide::log::start();
     let mut app = tide::new();
+
     app.at(&quot;/orders/shoes&quot;).post(order_shoes);
     app.listen(&quot;127.0.0.1:8080&quot;).await?;
+
     Ok(())
 }
 
@@ -388,7 +391,7 @@ From any route with named wildcards like this;</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    app.at(&quot;/:some/:parameters&quot;).get(url_params);
+</span>    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
     // ANCHOR END: url-params-route
 
     app.at(&quot;/query_params&quot;).get(query_params);

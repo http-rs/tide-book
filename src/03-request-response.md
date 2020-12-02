@@ -10,6 +10,7 @@ Additionally the `Request` object in Tide is used to pass information about the 
 The `Response` struct in turn allows us to craft a complete HTTP response. It contains the `Response` body, but also a set of HTTP headers and a response code. While the `Response` struct can be created, accessed and modified directly, it can be convenient to create a `Response` through the Tide `ResponseBuilder`.
 
 ## Request
+The Tide `Request` struct is te input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request `State`. We will look at this in more detail in the next chapter. For now it is enough to know that the `State` generic type parameter of the `Request<State>` type you will see everywhere is the application state. In most simple examples we will not use this state and you will see `Request<()>`.
 
 ### Request body
 

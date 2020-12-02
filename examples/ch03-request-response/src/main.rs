@@ -1,4 +1,3 @@
-// ANCHOR: example
 use serde::Deserialize;
 use std::collections::HashMap;
 use tide::Request;
@@ -7,7 +6,10 @@ use tide::Request;
 async fn main() -> tide::Result<()> {
     let mut app = tide::new();
 
+    // ANCHOR: url-params-route
     app.at("/:some/:parameters").get(url_params);
+    // ANCHOR END: url-params-route
+
     app.at("/query_params").get(query_params);
     app.at("/simple_query").get(simple_query);
 
@@ -15,6 +17,7 @@ async fn main() -> tide::Result<()> {
     Ok(())
 }
 
+// ANCHOR: url-params-handler
 async fn url_params(request: Request<()>) -> tide::Result {
     Ok(format!(
         "Hello, the url contained {} and {}",
@@ -23,6 +26,8 @@ async fn url_params(request: Request<()>) -> tide::Result {
     )
     .into())
 }
+// ANCHOR END: url-params-handler
+
 
 #[derive(Deserialize)]
 struct Query {
@@ -49,5 +54,3 @@ async fn simple_query(request: Request<()>) -> tide::Result {
     )
     .into())
 }
-
-// ANCHOR END: example

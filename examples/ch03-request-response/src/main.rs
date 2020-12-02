@@ -4,10 +4,11 @@ use tide::Request;
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
+    tide::log::start();
     let mut app = tide::new();
 
     // ANCHOR: url-params-route
-    app.at("/:some/:parameters").get(url_params);
+    app.at("/url_params/:some/:parameters").get(url_params);
     // ANCHOR END: url-params-route
 
     app.at("/query_params").get(query_params);

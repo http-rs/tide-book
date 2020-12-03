@@ -29,7 +29,6 @@ async fn url_params(request: Request<()>) -> tide::Result {
 }
 // ANCHOR END: url-params-handler
 
-
 #[derive(Deserialize)]
 struct Query {
     pub parameter1: String,

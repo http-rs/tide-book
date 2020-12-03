@@ -37,7 +37,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --manifest-path examples/Cargo.toml -- --check
+          args: -- --check
 
       - uses: actions-rs/cargo@v1
         with:

@@ -1,0 +1,6 @@
+[workspace]
+members = [
+  "examples/ch01-02-example",
+  "examples/ch02-02-routes",
+  "examples/ch03-request-response",
+]

@@ -1,6 +1,0 @@
-[workspace]
-members = [
-  "ch01-02-example",
-  "ch02-02-routes",
-  "ch03-request-response",
-]

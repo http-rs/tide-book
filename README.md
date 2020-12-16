@@ -1,6 +1,8 @@
 # Tide book
 This repository contains the source for the [Tide Book], the book is written in the `markdown` format and is built using [mdbook].
 
+- [简体中文](https://github.com/zzy/tide-zh-cn), [在线阅读](https://tide.budshome.com)
+
 ## Development
 The documentation can be edited using any text editor. Most commonly used editors support syntax highlighting for the `markdown` format. To view your changes you can install the [mdbook] tool locally, assuming you already have a working `Rust` setup;
 ```console

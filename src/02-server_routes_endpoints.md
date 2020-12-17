@@ -165,11 +165,11 @@ async fn main() -> tide::Result<()> {
     Ok(())
 }
 
-fn v1_routes(route: Route) {
+fn set_v1_routes(route: Route) {
     route.at("version").get(|_| async { Ok("Version one") });
 }
 
-fn v2_routes(route: Route) {
+fn set_v2_routes(route: Route) {
     route.at("version").get(|_| async { Ok("Version two") });
 }
 ```

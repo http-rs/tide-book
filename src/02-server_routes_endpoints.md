@@ -7,7 +7,8 @@ When a `Server` is started it will handle incoming `Request`s by matching their 
 ## Set up a Server
 
 A basic Tide `Server` is constructed with `tide::new()`.
-```rust
+
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let server = tide::new();
@@ -16,7 +17,8 @@ async fn main() -> tide::Result<()> {
 ```
 
 The server can then be started using the asynchronous `listen` method.
-```rust
+
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let server = tide::new();
@@ -31,7 +33,7 @@ While this is the simpelest Tide application that you can build, it is not very 
 
 To make the `Server` return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;
 
-```rust
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();
@@ -42,13 +44,14 @@ async fn main() -> tide::Result<()> {
 ```
 
 We use the `at` method to specify the route to the endpoint. We will talk about routes later. For now we'll just use the `"*"` wildcard route that matches anything we throw at it. For this example we will add an async closure as the `Endpoint`. Tide expects something that implements the `Endpoint` trait here. But this closure will work because Tide implements the `Endpoint` trait for certain async functions with a signature that looks like this;
-```rust
+
+```rust,edition2018,no_run
 async fn endpoint(request: tide::Request) -> tide::Result<impl Into<Response>>
 ```
 
 In this case `Into<Response>` is implemented for `&str` so our closure is a valid Endpoint. Because `Into<Response>` is implemented for several other types you can quickly set up endpoints. For example the next endpoint uses the `json!` macro provided by `use tide::prelude::*` to return a `serde_json::Value`.
 
-```rust
+```rust,edition2018,no_run
 use tide::prelude::*;
 #[async_std::main]
 async fn main() -> tide::Result<()> {
@@ -69,7 +72,7 @@ async fn main() -> tide::Result<()> {
 
 Returning quick string or json results is nice for getting a working endpoint quickly. But for more control a full `Response` struct can be returned.
 
-```rust
+```rust,edition2018,no_run
 server.at("*").get(|_| async {
     Ok(Response::new(StatusCode::Ok).set_body("Hello world".into()))
 });
@@ -79,7 +82,7 @@ The `Response` type is described in more detail in the next chapter.
 
 More than one endpoint can be added by chaining methods. For example if we want to reply to a `delete` request as wel as a `get` request endpoints can be added for both;
 
-```rust
+```rust,edition2018,no_run
 server.at("*")
     .get(|_| async { Ok("Hello, world!") })
     .delete(|_| async { Ok("Goodbye, cruel world!") });
@@ -87,7 +90,7 @@ server.at("*")
 
 Eventually, especially when our endpoint methods grow a bit, the route definitions will get a crowded. We could move our endpoint implementations to their own functions;
 
-```rust
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();
@@ -105,7 +108,7 @@ async fn endpoint(_req: tide::Request<()>) -> Result<Response> {
 
 The server we built is still not very useful. It will return the same response for any URL. It is only able to differentiate between requests by HTTP method. We already used the `.at` method of the `Server` to define a wildcard route. You might have guessed how to add endpoints to specific routes;
 
-```rust,ignore
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();
@@ -119,16 +122,19 @@ async fn main() -> tide::Result<()> {
 ```
 
 Here we added two routes for two different endpoints. Routes can also be composed by chaining the `.at` method.
-```rust
+
+```rust,edition2018,no_run
 server.at("/hello").at("world").get(|_| async { Ok("Hello, world!") });
 ```
 This will give you the same result as:
-```rust
+
+```rust,edition2018,no_run
 server.at("/hello/world").get(|_| async { Ok("Hello, world!") });
 ```
 
 We can store the partial routes and re-use them;
-```rust
+
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();
@@ -146,7 +152,8 @@ async fn main() -> tide::Result<()> {
 Here we added two sub-routes to the `hello` route. One at `/hello/world` and another one at `hello/mum` with different endpoint functions. We also added an endpoint at `/hello`. This gives an idea what it will be like to build up more complex routing trees
 
 When you have a complex api this also allows you to define different pieces of your route tree in separate functions.
-```rust
+
+```rust,edition2018,no_run
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     let mut server = tide::new();

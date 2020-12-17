@@ -9,7 +9,7 @@ async fn main() -> tide::Result<()> {
 
     // ANCHOR: url-params-route
     app.at("/url_params/:some/:parameters").get(url_params);
-    // ANCHOR END: url-params-route
+    // ANCHOR_END: url-params-route
 
     app.at("/query_params").get(query_params);
     app.at("/simple_query").get(simple_query);
@@ -27,7 +27,7 @@ async fn url_params(request: Request<()>) -> tide::Result {
     )
     .into())
 }
-// ANCHOR END: url-params-handler
+// ANCHOR_END: url-params-handler
 
 #[derive(Deserialize)]
 struct Query {

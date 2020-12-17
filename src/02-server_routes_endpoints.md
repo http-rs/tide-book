@@ -45,7 +45,7 @@ async fn main() -> tide::Result<()> {
 
 We use the `at` method to specify the route to the endpoint. We will talk about routes later. For now we'll just use the `"*"` wildcard route that matches anything we throw at it. For this example we will add an async closure as the `Endpoint`. Tide expects something that implements the `Endpoint` trait here. But this closure will work because Tide implements the `Endpoint` trait for certain async functions with a signature that looks like this;
 
-```rust,edition2018,no_run
+```rust,ignore
 async fn endpoint(request: tide::Request) -> tide::Result<impl Into<Response>>
 ```
 
@@ -72,7 +72,7 @@ async fn main() -> tide::Result<()> {
 
 Returning quick string or json results is nice for getting a working endpoint quickly. But for more control a full `Response` struct can be returned.
 
-```rust,edition2018,no_run
+```rust,ignore
 server.at("*").get(|_| async {
     Ok(Response::new(StatusCode::Ok).set_body("Hello world".into()))
 });
@@ -82,7 +82,7 @@ The `Response` type is described in more detail in the next chapter.
 
 More than one endpoint can be added by chaining methods. For example if we want to reply to a `delete` request as wel as a `get` request endpoints can be added for both;
 
-```rust,edition2018,no_run
+```rust,ignore
 server.at("*")
     .get(|_| async { Ok("Hello, world!") })
     .delete(|_| async { Ok("Goodbye, cruel world!") });
@@ -123,12 +123,12 @@ async fn main() -> tide::Result<()> {
 
 Here we added two routes for two different endpoints. Routes can also be composed by chaining the `.at` method.
 
-```rust,edition2018,no_run
+```rust,ignore
 server.at("/hello").at("world").get(|_| async { Ok("Hello, world!") });
 ```
 This will give you the same result as:
 
-```rust,edition2018,no_run
+```rust,ignore
 server.at("/hello/world").get(|_| async { Ok("Hello, world!") });
 ```
 
@@ -176,6 +176,7 @@ fn set_v2_routes(route: Route) {
 This example shows for example an API that exposes two different versions. The routes for each version are defined in a separate function.
 
 ## Wildcards
+
 There are two wildcard characters we can use `:` and `*`. We already met the `*` wildcard. We used it in the first couple of endpoint examples.
 Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. `:` will match exactly one segment while '*' will match one or more segments.
 
@@ -184,10 +185,12 @@ Both wildcard characters will match route segments. Segments are the pieces of a
 "foo/:/baz" will match "/foo/bar/baz" but not "/foo/bar/qux/baz", the latter has two segments between foo and baz, while `:` only matches single segments.
 
 ### Naming wildcards
+
 It is also possible to name wildcards. This allows you to query the specific strings the wildcard matched on. For example `"/:bar/*baz"` 
 will match the string `"/one/two/three"`. You can then query which wildcards matched which parts of the string. In this case `bar` matched `one` while `baz` matched `two/three`. We'll see how you can use this to parse parameters from urls in the next chapter.
 
 ### Wildcard precedence
+
 When using wildcards it is possible to define multiple different routes that match the same path.
 
 The routes `"/some/*"` and `"/some/specific/*"` will both match the path `"/some/specific/route"` for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the `"/some/specific/*"` route will match the path.

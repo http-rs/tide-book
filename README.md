@@ -1,6 +1,8 @@
 # Tide book
 This repository contains the source for the [Tide Book], the book is written in the `markdown` format and is built using [mdbook].
 
+Languages:
+- [English][Tide Book]
 - [简体中文](https://github.com/zzy/tide-zh-cn), [在线阅读](https://tide.budshome.com)
 
 ## Development

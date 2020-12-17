@@ -1,7 +1,7 @@
 # Request and Response
 
 In the previous chapter we saw how endpoints are functions that take a `Request` and return a `Response`, or more accurately a `Result` enum with a type that can be turned into a `Response`
-```rust
+```rust,edition2018,no_run
 async fn endpoint(request: tide::Request) -> tide::Result<impl Into<Response>>
 ```
 The `Request` object contains all the information from the HTTP request that was received by the server. The URL from the request, HTTP headers, cookies and query string parameters can all be found in the `Request`.
@@ -16,12 +16,16 @@ The Tide `Request` struct is te input to your endpoint handler function. It cont
 
 ### Accessing Url parameters
 In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.
+
 From any route with named wildcards like this;
-```rust
+
+```rust,edition2018,no_run
 {{#include ../examples/ch03-request-response/src/main.rs:url-params-route}}
 ```
+
 Any value that was used to match the a wildcard can be retrieved using the `request.param` method;
-```rust
+
+```rust,edition2018,no_run
 {{#include ../examples/ch03-request-response/src/main.rs:url-params-handler}}
 ```
 

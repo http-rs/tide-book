@@ -80,7 +80,7 @@ server.at("*").get(|_| async {
 
 The `Response` type is described in more detail in the next chapter.
 
-More than one endpoint can be added by chaining methods. For example if we want to reply to a `delete` request as wel as a `get` request endpoints can be added for both;
+More than one endpoint can be added by chaining methods. For example if we want to reply to a `delete` request as well as a `get` request endpoints can be added for both;
 
 ```rust,ignore
 server.at("*")
@@ -193,4 +193,4 @@ will match the string `"/one/two/three"`. You can then query which wildcards mat
 
 When using wildcards it is possible to define multiple different routes that match the same path.
 
-The routes `"/some/*"` and `"/some/specific/*"` will both match the path `"/some/specific/route"` for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the `"/some/specific/*"` route will match the path.
+The routes `"/some/*"` and `"/some/specific/*"` will both match the path `"/some/specific/route"` for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the given example the `"/some/specific/*"` route will match the path.

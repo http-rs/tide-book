@@ -201,10 +201,10 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
     Ok(format!(&quot;Hello, {}! I've put in an order for {} shoes&quot;, name, legs).into())
 }
 </code></pre></pre>
-<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
+<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
 </code></pre>
 <p>Hello, Chashu! I've put in an order for 4 shoes</p>
-<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
 </code></pre>
 <p>number too large to fit in target type</p>
 <h1><a class="header" href="#the-server-routes-and-endpoints" id="the-server-routes-and-endpoints">The server, Routes and Endpoints</a></h1>
@@ -265,7 +265,7 @@ async fn main() -&gt; tide::Result&lt;()&gt; {
 });
 </code></pre>
 <p>The <code>Response</code> type is described in more detail in the next chapter.</p>
-<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as wel as a <code>get</code> request endpoints can be added for both;</p>
+<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as well as a <code>get</code> request endpoints can be added for both;</p>
 <pre><code class="language-rust ignore">server.at(&quot;*&quot;)
     .get(|_| async { Ok(&quot;Hello, world!&quot;) })
     .delete(|_| async { Ok(&quot;Goodbye, cruel world!&quot;) });
@@ -349,7 +349,7 @@ Both wildcard characters will match route segments. Segments are the pieces of a
 will match the string <code>&quot;/one/two/three&quot;</code>. You can then query which wildcards matched which parts of the string. In this case <code>bar</code> matched <code>one</code> while <code>baz</code> matched <code>two/three</code>. We'll see how you can use this to parse parameters from urls in the next chapter.</p>
 <h3><a class="header" href="#wildcard-precedence" id="wildcard-precedence">Wildcard precedence</a></h3>
 <p>When using wildcards it is possible to define multiple different routes that match the same path.</p>
-<p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the example it the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>
+<p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the given example the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>
 <h1><a class="header" href="#request-and-response" id="request-and-response">Request and Response</a></h1>
 <p>In the previous chapter we saw how endpoints are functions that take a <code>Request</code> and return a <code>Response</code>, or more accurately a <code>Result</code> enum with a type that can be turned into a <code>Response</code></p>
 <pre><pre class="playground"><code class="language-rust edition2018 no_run">
@@ -362,7 +362,7 @@ will match the string <code>&quot;/one/two/three&quot;</code>. You can then quer
 Additionally the <code>Request</code> object in Tide is used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
 <p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While the <code>Response</code> struct can be created, accessed and modified directly, it can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
 <h2><a class="header" href="#request" id="request">Request</a></h2>
-<p>The Tide <code>Request</code> struct is te input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state. In most simple examples we will not use this state and you will see <code>Request&lt;()&gt;</code>.</p>
+<p>The Tide <code>Request</code> struct is the input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state. In most simple examples we will not use this state and you will see <code>Request&lt;()&gt;</code>.</p>
 <h3><a class="header" href="#request-body" id="request-body">Request body</a></h3>
 <h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
 <p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>

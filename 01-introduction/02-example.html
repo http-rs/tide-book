@@ -187,10 +187,10 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
     Ok(format!(&quot;Hello, {}! I've put in an order for {} shoes&quot;, name, legs).into())
 }
 </code></pre></pre>
-<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
+<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
 </code></pre>
 <p>Hello, Chashu! I've put in an order for 4 shoes</p>
-<pre><code class="language-sh">$ curl localhost:8000/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
 </code></pre>
 <p>number too large to fit in target type</p>
 

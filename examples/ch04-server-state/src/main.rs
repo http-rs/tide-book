@@ -1,10 +1,12 @@
 use std::sync::{Arc, atomic::{AtomicU32, Ordering}};
 use tide::Request;
 
+// ANCHOR: appstate
 #[derive(Clone)]
 struct AppState {
     pub datastore: Arc<AtomicU32>,
 }
+// ANCHOR_END: appstate
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
@@ -34,4 +36,3 @@ async fn read_state(request: Request<AppState>) -> tide::Result {
     Ok(format!("datastore has been updated {} times", request.state().datastore.load(Ordering::SeqCst)).into())
 }
 // ANCHOR_END: read_state_request
-

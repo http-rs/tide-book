@@ -6,5 +6,10 @@ Until now endpoints were simple stateless functions that processed a request int
 Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called `State`. Because we've been creating `Server`s with the `Server::new` factory method so far we have been using `Server<()>`. But we can pass in our own state struct or enum when creating the Server. This will then be passed into all endpoint handlers through the `Request`.
 
 ### Set up state for an application
+To set up our application state we first need to have a type to store the application data that will be shared between requests.
+```rust,ignore
+{{#include ../examples/ch04-server-state/src/main.rs:appstate}}
+```
+In this example we will share a simple counter. We use an Arc<AtomicU32> to make sure we can safely share this even when simultanious requests come in.
 
 ### Accessing state

@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><a href="03-request-response/02-response.html"><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</a></li></ol></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -355,7 +355,7 @@ will match the string <code>&quot;/one/two/three&quot;</code>. You can then quer
 <p>When using wildcards it is possible to define multiple different routes that match the same path.</p>
 <p>The routes <code>&quot;/some/*&quot;</code> and <code>&quot;/some/specific/*&quot;</code> will both match the path <code>&quot;/some/specific/route&quot;</code> for example. In many web-frameworks the order in which the routes are defined will determine which route will match. Tide will match the most specific route that matches. In the given example the <code>&quot;/some/specific/*&quot;</code> route will match the path.</p>
 <h1><a class="header" href="#request-and-response" id="request-and-response">Request and Response</a></h1>
-<p>In the previous chapter we saw how endpoints are functions that take a <code>Request</code> and return a <code>Response</code>, or more accurately a <code>Result</code> enum with a type that can be turned into a <code>Response</code></p>
+<p>In the previous chapter we saw how endpoints are simply functions that take a <code>Request</code> and return a <code>Response</code>, or more accurately a <code>Result</code> enum with a type that can be turned into a <code>Response</code></p>
 <pre><pre class="playground"><code class="language-rust edition2018 no_run">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -371,17 +371,10 @@ Additionally the <code>Request</code> object in Tide is used to pass information
 <h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
 <p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
 <p>From any route with named wildcards like this;</p>
-<pre><code class="language-rust ignore">    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
+<pre><code class="language-rust ignore">{{#include ../examples/ch03-request-response/src/main.rs:url-params-route}}
 </code></pre>
 <p>Any value that was used to match the a wildcard can be retrieved using the <code>request.param</code> method;</p>
-<pre><code class="language-rust ignore">async fn url_params(request: Request&lt;()&gt;) -&gt; tide::Result {
-    Ok(format!(
-        &quot;Hello, the url contained {} and {}&quot;,
-        request.param(&quot;some&quot;).unwrap(),
-        request.param(&quot;parameters&quot;).unwrap()
-    )
-    .into())
-}
+<pre><code class="language-rust ignore">{{#include ../examples/ch03-request-response/src/main.rs:url-params-handler}}
 </code></pre>
 <h3><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h3>
 <h3><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h3>

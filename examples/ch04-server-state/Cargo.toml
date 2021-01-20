@@ -1,0 +1,9 @@
+[package]
+name = "ch04-server-state"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+async-std = { version = "1.6.5", features = ["attributes"] }
+serde = {version = "1.0.116", features = ["derive"]}
+tide = "0.15.0"

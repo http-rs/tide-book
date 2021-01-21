@@ -18,7 +18,7 @@ To set the state in the `tide::server` we need to use a different constructor th
 ```
 
 ### Accessing state
-
+The state can then be accessed using the `state` method on your `Request` inside your endpoints;
 ```rust,ignore
 {{#include ../examples/ch04-server-state/src/main.rs:read_state_request}}
 ```

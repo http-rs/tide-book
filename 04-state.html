@@ -175,7 +175,31 @@ struct AppState {
 }
 </code></pre>
 <p>In this example we will share a simple counter. We use an Arc<AtomicU32> to make sure we can safely share this even when simultanious requests come in.</p>
+<p>To set the state in the <code>tide::server</code> we need to use a different constructor than the <code>server::new()</code> we used previously. We can use <code>server::with_state(...)</code> to set up a server with state.</p>
+<pre><code class="language-rust ignore">    let mut app = tide::with_state(AppState {
+        datastore: Arc::new(AtomicU32::new(0)),
+    });
+</code></pre>
 <h3><a class="header" href="#accessing-state" id="accessing-state">Accessing state</a></h3>
+<pre><code class="language-rust ignore">async fn read_state(request: Request&lt;AppState&gt;) -&gt; tide::Result {
+    Ok(format!(
+        &quot;datastore has been updated {} times&quot;,
+        request.state().datastore.load(Ordering::SeqCst)
+    )
+    .into())
+}
+</code></pre>
+<pre><code class="language-rust ignore">async fn update_state(request: Request&lt;AppState&gt;) -&gt; tide::Result {
+    request.state().datastore.fetch_add(1, Ordering::SeqCst);
+
+    Ok(&quot;datastore updated&quot;.into())
+}
+</code></pre>
+<h3><a class="header" href="#state-limitations" id="state-limitations">State limitations</a></h3>
+<p>As you can see in the previous example the <code>State</code> object does have some limitations. First of all Tide sets some trait bounds. The <code>State</code> needs to be <code>Clone</code>, <code>Send</code> and <code>Sync</code>. This is because it will be passed into all your endpoints. These might be running concurrently and on different threads than where you created the <code>State</code></p>
+<p>The <code>State</code> is also returned as a non-mutable reference.</p>
+<p>To get around these limitations for our counter we used an AtomicU32 that provides the internal mutability for our counter and we wrapped it in an <code>Arc</code> to be able to copy it around.</p>
+<p>In practice this is often not that much of a problem. Many database-access libraries for example already provide connection pools components that are written to be able to be passed around inside an application like this. <TODO>point at an sqlx examle</TODO></p>
 
                     </main>
 

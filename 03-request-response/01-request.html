@@ -169,10 +169,17 @@
 <h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
 <p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
 <p>From any route with named wildcards like this;</p>
-<pre><code class="language-rust ignore">{{#include ../examples/ch03-request-response/src/main.rs:url-params-route}}
+<pre><code class="language-rust ignore">    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
 </code></pre>
 <p>Any value that was used to match the a wildcard can be retrieved using the <code>request.param</code> method;</p>
-<pre><code class="language-rust ignore">{{#include ../examples/ch03-request-response/src/main.rs:url-params-handler}}
+<pre><code class="language-rust ignore">async fn url_params(request: Request&lt;()&gt;) -&gt; tide::Result {
+    Ok(format!(
+        &quot;Hello, the url contained {} and {}&quot;,
+        request.param(&quot;some&quot;).unwrap(),
+        request.param(&quot;parameters&quot;).unwrap()
+    )
+    .into())
+}
 </code></pre>
 <h3><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h3>
 <h3><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h3>

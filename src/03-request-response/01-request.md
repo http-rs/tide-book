@@ -9,13 +9,13 @@ In the last chapter where we talked about matching Url routes and specifically i
 From any route with named wildcards like this;
 
 ```rust,ignore
-{{#include ../examples/ch03-request-response/src/main.rs:url-params-route}}
+{{#include ../../examples/ch03-request-response/src/main.rs:url-params-route}}
 ```
 
 Any value that was used to match the a wildcard can be retrieved using the `request.param` method;
 
 ```rust,ignore
-{{#include ../examples/ch03-request-response/src/main.rs:url-params-handler}}
+{{#include ../../examples/ch03-request-response/src/main.rs:url-params-handler}}
 ```
 
 ### The query string and query parameters

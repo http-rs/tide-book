@@ -12,4 +12,26 @@ To set up our application state we first need to have a type to store the applic
 ```
 In this example we will share a simple counter. We use an Arc<AtomicU32> to make sure we can safely share this even when simultanious requests come in.
 
+To set the state in the `tide::server` we need to use a different constructor than the `server::new()` we used previously. We can use `server::with_state(...)` to set up a server with state.
+```rust,ignore
+{{#include ../examples/ch04-server-state/src/main.rs:start_with_state}}
+```
+
 ### Accessing state
+
+```rust,ignore
+{{#include ../examples/ch04-server-state/src/main.rs:read_state_request}}
+```
+
+```rust,ignore
+{{#include ../examples/ch04-server-state/src/main.rs:update_state_request}}
+```
+
+### State limitations
+As you can see in the previous example the `State` object does have some limitations. First of all Tide sets some trait bounds. The `State` needs to be `Clone`, `Send` and `Sync`. This is because it will be passed into all your endpoints. These might be running concurrently and on different threads than where you created the `State`
+
+The `State` is also returned as a non-mutable reference.
+
+To get around these limitations for our counter we used an AtomicU32 that provides the internal mutability for our counter and we wrapped it in an `Arc` to be able to copy it around.
+
+In practice this is often not that much of a problem. Many database-access libraries for example already provide connection pools components that are written to be able to be passed around inside an application like this. <TODO>point at an sqlx examle</TODO>

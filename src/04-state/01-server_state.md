@@ -6,23 +6,23 @@ Tide gives us Server state to do just this. If you look at the definition of the
 ## Set up state for an application
 To set up our application state we first need to have a type to store the application data that will be shared between requests.
 ```rust,ignore
-{{#include ../examples/ch04-server-state/src/main.rs:appstate}}
+{{#include ../../examples/ch04-server-state/src/main.rs:appstate}}
 ```
 In this example we will share a simple counter. We use an Arc<AtomicU32> to make sure we can safely share this even when simultanious requests come in.
 
 To set the state in the `tide::server` we need to use a different constructor than the `server::new()` we used previously. We can use `server::with_state(...)` to set up a server with state.
 ```rust,ignore
-{{#include ../examples/ch04-server-state/src/main.rs:start_with_state}}
+{{#include ../../examples/ch04-server-state/src/main.rs:start_with_state}}
 ```
 
 ## Accessing state
 The state can then be accessed using the `state` method on your `Request` inside your endpoints;
 ```rust,ignore
-{{#include ../examples/ch04-server-state/src/main.rs:read_state_request}}
+{{#include ../../examples/ch04-server-state/src/main.rs:read_state_request}}
 ```
 
 ```rust,ignore
-{{#include ../examples/ch04-server-state/src/main.rs:update_state_request}}
+{{#include ../../examples/ch04-server-state/src/main.rs:update_state_request}}
 ```
 
 ## Server state limitations

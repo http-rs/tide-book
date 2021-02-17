@@ -31,4 +31,4 @@
 - [Using Tide with a Database]()
 ---
 
-[Further reading](./a-further-reading.md)
+[Further reading](./further-reading.md)

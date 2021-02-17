@@ -13,9 +13,8 @@
 - [Tide in Practice]()
   - [Testing Tide Applications]()
   - [Deploying Tide Applications]()
-  - [Writing JSON Web Services with Tide]()
-  - [Writing an HTTP Website with Tide]()
-
+  - [JSON Web Services with Tide]()
+  - [HTTP Websites with Tide]()
   - [Using Tide with a Database]()
 
 - [Further reading](./a-further-reading.md)

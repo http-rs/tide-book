@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Example - Tide Book</title>
+        <title>Server State - Tide Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../01-introduction/02-example.html" class="active"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="../03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><a href="../03-request-response/02-response.html"><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</a></li></ol></li><li class="chapter-item expanded "><a href="../04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="../05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="../06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="../a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction/00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../introduction/01-getting_started.html">Getting Started</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide Basics</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Anatomy of a Tide application</div></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/00-intro.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/01-server.html"><strong aria-hidden="true">2.1.</strong> Set up a Server</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/02-endpoints.html"><strong aria-hidden="true">2.2.</strong> Handle requests with endpoints</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/03-routes.html"><strong aria-hidden="true">2.3.</strong> Defining and composing routes</a></li></ol></li><li class="chapter-item expanded "><a href="../03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</div></li></ol></li><li class="chapter-item expanded "><a href="../04-state/00-intro.html"><strong aria-hidden="true">4.</strong> State</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../04-state/01-server_state.html" class="active"><strong aria-hidden="true">4.1.</strong> Server State</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.2.</strong> Request State</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> Middleware</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide in Practice</li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing Tide Applications</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Deploying Tide Applications</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> Bare-bones deployment</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> Deploying behind a reverse-proxy</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> Containerizing a Tide Application</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> JSON Web Services with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> HTTP Websites with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> Using Tide with a Database</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../further-reading.html">Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,53 +163,56 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#example" id="example">Example</a></h1>
-<p>Create an HTTP server that receives a JSON body, validates it, and responds
-with a confirmation message.</p>
-<pre><pre class="playground"><code class="language-rust edition2018 no_run">use tide::prelude::*;
-use tide::Request;
-
-#[derive(Debug, Deserialize)]
-struct Animal {
-    name: String,
-    legs: u8,
+                        <h1><a class="header" href="#server-state" id="server-state">Server State</a></h1>
+<p>Until now endpoints were simple stateless functions that process requests into a responses. But for any serious application we need to be able to maintain state somewhere. In a real life application we need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables for this.</p>
+<p>Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called <code>State</code>. We've been using <code>Server::new</code> to construct our <code>Server</code> instances, which returns a server without state; <code>Server&lt;()&gt;</code>. But the <code>Server</code> type also has a <code>Server::with_state</code> constructor where you can pass in our own state instance when creating the Server. This State will then be passed to all endpoint handlers through the <code>Request</code> parameter.</p>
+<h2><a class="header" href="#setup-state-for-an-application" id="setup-state-for-an-application">Setup state for an application</a></h2>
+<p>To set up our application state we first need to have a type to store the application data that will be shared between requests.</p>
+<pre><code class="language-rust ignore">#[derive(Clone)]
+struct AppState {
+    pub datastore: Arc&lt;AtomicU32&gt;,
 }
-
-#[async_std::main]
-async fn main() -&gt; tide::Result&lt;()&gt; {
-    tide::log::start();
-    let mut app = tide::new();
-
-    app.at(&quot;/orders/shoes&quot;).post(order_shoes);
-    app.listen(&quot;127.0.0.1:8080&quot;).await?;
-
-    Ok(())
-}
-
-async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
-    let Animal { name, legs } = req.body_json().await?;
-    Ok(format!(&quot;Hello, {}! I've put in an order for {} shoes&quot;, name, legs).into())
-}
-</code></pre></pre>
-<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
 </code></pre>
-<p>Hello, Chashu! I've put in an order for 4 shoes</p>
-<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+<p>In this example we will share a simple counter. We use an Arc<AtomicU32> to make sure we can safely share this even when simultanious requests come in.</p>
+<p>To set the state in the <code>tide::server</code> we need to use a different constructor than the <code>server::new()</code> we used previously. We can use <code>server::with_state(...)</code> to set up a server with state.</p>
+<pre><code class="language-rust ignore">    let mut app = tide::with_state(AppState {
+        datastore: Arc::new(AtomicU32::new(0)),
+    });
 </code></pre>
-<p>number too large to fit in target type</p>
+<h2><a class="header" href="#accessing-state" id="accessing-state">Accessing state</a></h2>
+<p>The state can then be accessed using the <code>state</code> method on your <code>Request</code> inside your endpoints;</p>
+<pre><code class="language-rust ignore">async fn read_state(request: Request&lt;AppState&gt;) -&gt; tide::Result {
+    Ok(format!(
+        &quot;datastore has been updated {} times&quot;,
+        request.state().datastore.load(Ordering::SeqCst)
+    )
+    .into())
+}
+</code></pre>
+<pre><code class="language-rust ignore">async fn update_state(request: Request&lt;AppState&gt;) -&gt; tide::Result {
+    request.state().datastore.fetch_add(1, Ordering::SeqCst);
+
+    Ok(&quot;datastore updated&quot;.into())
+}
+</code></pre>
+<h2><a class="header" href="#server-state-limitations" id="server-state-limitations">Server state limitations</a></h2>
+<p>As you can see in the previous example the <code>State</code> object does have some limitations. First of all Tide sets some trait bounds. The <code>State</code> needs to be <code>Clone</code>, <code>Send</code> and <code>Sync</code>. This is because it will be passed into all your endpoints, these might be running concurrently on different threads than where you created the <code>State</code>
+When accessing <code>State</code> in your endpoints it's only available as a non-mutable reference.</p>
+<p>To get around these limitations for our counter we used an AtomicU32 that provides the internal mutability for our counter and we wrapped it in an <code>Arc</code> to be able to copy it around.</p>
+<p>In practice this is often not that much of a problem. Many database-access libraries for example already provide connection pools components that are written to be able to be passed around inside an application like this. <TODO>point at an sqlx examle</TODO></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../01-introduction/01-getting_started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../04-state/00-intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../02-server_routes_endpoints.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../further-reading.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -221,13 +224,13 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../01-introduction/01-getting_started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../04-state/00-intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../02-server_routes_endpoints.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../further-reading.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The Request struct - Tide Book</title>
+        <title>Handle requests with endpoints - Tide Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction/00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../introduction/01-getting_started.html">Getting Started</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide Basics</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Anatomy of a Tide application</div></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/00-intro.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/01-server.html"><strong aria-hidden="true">2.1.</strong> Set up a Server</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/02-endpoints.html"><strong aria-hidden="true">2.2.</strong> Handle requests with endpoints</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/03-routes.html"><strong aria-hidden="true">2.3.</strong> Defining and composing routes</a></li></ol></li><li class="chapter-item expanded "><a href="../03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03-request-response/01-request.html" class="active"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</div></li></ol></li><li class="chapter-item expanded "><a href="../04-state/00-intro.html"><strong aria-hidden="true">4.</strong> State</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../04-state/01-server_state.html"><strong aria-hidden="true">4.1.</strong> Server State</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.2.</strong> Request State</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> Middleware</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide in Practice</li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing Tide Applications</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Deploying Tide Applications</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> Bare-bones deployment</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> Deploying behind a reverse-proxy</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> Containerizing a Tide Application</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> JSON Web Services with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> HTTP Websites with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> Using Tide with a Database</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../further-reading.html">Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction/00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../introduction/01-getting_started.html">Getting Started</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide Basics</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Anatomy of a Tide application</div></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/00-intro.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/01-server.html"><strong aria-hidden="true">2.1.</strong> Set up a Server</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/02-endpoints.html" class="active"><strong aria-hidden="true">2.2.</strong> Handle requests with endpoints</a></li><li class="chapter-item expanded "><a href="../02-server_routes_endpoints/03-routes.html"><strong aria-hidden="true">2.3.</strong> Defining and composing routes</a></li></ol></li><li class="chapter-item expanded "><a href="../03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</div></li></ol></li><li class="chapter-item expanded "><a href="../04-state/00-intro.html"><strong aria-hidden="true">4.</strong> State</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../04-state/01-server_state.html"><strong aria-hidden="true">4.1.</strong> Server State</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.2.</strong> Request State</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> Middleware</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide in Practice</li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing Tide Applications</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Deploying Tide Applications</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> Bare-bones deployment</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> Deploying behind a reverse-proxy</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> Containerizing a Tide Application</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> JSON Web Services with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> HTTP Websites with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> Using Tide with a Database</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../further-reading.html">Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,39 +163,74 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#request" id="request">Request</a></h1>
-<p>The Tide <code>Request</code> struct is the input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state. In most simple examples we will not use this state and you will see <code>Request&lt;()&gt;</code>.</p>
-<h2><a class="header" href="#request-body" id="request-body">Request body</a></h2>
-<h2><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h2>
-<p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
-<p>From any route with named wildcards like this;</p>
-<pre><code class="language-rust ignore">    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
-</code></pre>
-<p>Any value that was used to match the a wildcard can be retrieved using the <code>request.param</code> method;</p>
-<pre><code class="language-rust ignore">async fn url_params(request: Request&lt;()&gt;) -&gt; tide::Result {
-    Ok(format!(
-        &quot;Hello, the url contained {} and {}&quot;,
-        request.param(&quot;some&quot;).unwrap(),
-        request.param(&quot;parameters&quot;).unwrap()
-    )
-    .into())
+                        <h1><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with endpoints</a></h1>
+<p>To make the <code>Server</code> return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut server = tide::new();
+    server.at(&quot;*&quot;).get(|_| async { Ok(&quot;Hello, world!&quot;) });
+    server.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
 }
+</code></pre></pre>
+<p>We use the <code>at</code> method to specify the route to the endpoint. We will talk about routes later. For now we'll just use the <code>&quot;*&quot;</code> wildcard route that matches anything we throw at it. For this example we will add an async closure as the <code>Endpoint</code>. Tide expects something that implements the <code>Endpoint</code> trait here. But this closure will work because Tide implements the <code>Endpoint</code> trait for certain async functions with a signature that looks like this;</p>
+<pre><code class="language-rust ignore">async fn endpoint(request: tide::Request) -&gt; tide::Result&lt;impl Into&lt;Response&gt;&gt;
 </code></pre>
-<h2><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h2>
-<h2><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h2>
+<p>In this case <code>Into&lt;Response&gt;</code> is implemented for <code>&amp;str</code> so our closure is a valid Endpoint. Because <code>Into&lt;Response&gt;</code> is implemented for several other types you can quickly set up endpoints. For example the next endpoint uses the <code>json!</code> macro provided by <code>use tide::prelude::*</code> to return a <code>serde_json::Value</code>.</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use tide::prelude::*;
+#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut server = tide::new();
+    server.at(&quot;*&quot;).get(|_| async {
+        Ok(json!({
+            &quot;meta&quot;: { &quot;count&quot;: 2 },
+            &quot;animals&quot;: [
+                { &quot;type&quot;: &quot;cat&quot;, &quot;name&quot;: &quot;chashu&quot; },
+                { &quot;type&quot;: &quot;cat&quot;, &quot;name&quot;: &quot;nori&quot; }
+            ]
+        }))
+    });
+    server.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
+}
+</code></pre></pre>
+<p>Returning quick string or json results is nice for getting a working endpoint quickly. But for more control a full <code>Response</code> struct can be returned.</p>
+<pre><code class="language-rust ignore">server.at(&quot;*&quot;).get(|_| async {
+    Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
+});
+</code></pre>
+<p>The <code>Response</code> type is described in more detail in the next chapter.</p>
+<p>More than one endpoint can be added by chaining methods. For example if we want to reply to a <code>delete</code> request as well as a <code>get</code> request endpoints can be added for both;</p>
+<pre><code class="language-rust ignore">server.at(&quot;*&quot;)
+    .get(|_| async { Ok(&quot;Hello, world!&quot;) })
+    .delete(|_| async { Ok(&quot;Goodbye, cruel world!&quot;) });
+</code></pre>
+<p>Eventually, especially when our endpoint methods grow a bit, the route definitions will get a crowded. We could move our endpoint implementations to their own functions;</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">#[async_std::main]
+async fn main() -&gt; tide::Result&lt;()&gt; {
+    let mut server = tide::new();
+    server.at(&quot;*&quot;).get(endpoint);
+    server.listen(&quot;127.0.0.1:8080&quot;).await?;
+    Ok(())
+}
+
+async fn endpoint(_req: tide::Request&lt;()&gt;) -&gt; Result&lt;Response&gt; {
+    Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
+}
+</code></pre></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../03-request-response/00-request-response.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../02-server_routes_endpoints/01-server.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../04-state/00-intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../02-server_routes_endpoints/03-routes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -207,13 +242,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../03-request-response/00-request-response.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../02-server_routes_endpoints/01-server.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../04-state/00-intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../02-server_routes_endpoints/03-routes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

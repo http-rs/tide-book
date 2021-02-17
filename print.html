@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="01-introduction/00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01-introduction/01-getting_started.html"><strong aria-hidden="true">1.1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="01-introduction/02-example.html"><strong aria-hidden="true">1.2.</strong> Example</a></li></ol></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li class="chapter-item expanded "><a href="03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><a href="03-request-response/02-response.html"><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</a></li></ol></li><li class="chapter-item expanded "><a href="04-state.html"><strong aria-hidden="true">4.</strong> Server and request state</a></li><li class="chapter-item expanded "><a href="05-middleware.html"><strong aria-hidden="true">5.</strong> Middleware</a></li><li class="chapter-item expanded "><a href="06-testing.html"><strong aria-hidden="true">6.</strong> Testing</a></li><li class="chapter-item expanded "><a href="a-further-reading.html"><strong aria-hidden="true">7.</strong> Further reading</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction/00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="introduction/01-getting_started.html">Getting Started</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide Basics</li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.</strong> Anatomy of a Tide application</div></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints/00-intro.html"><strong aria-hidden="true">2.</strong> Server, Routes and Endpoints</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02-server_routes_endpoints/01-server.html"><strong aria-hidden="true">2.1.</strong> Set up a Server</a></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints/02-endpoints.html"><strong aria-hidden="true">2.2.</strong> Handle requests with endpoints</a></li><li class="chapter-item expanded "><a href="02-server_routes_endpoints/03-routes.html"><strong aria-hidden="true">2.3.</strong> Defining and composing routes</a></li></ol></li><li class="chapter-item expanded "><a href="03-request-response/00-request-response.html"><strong aria-hidden="true">3.</strong> Request and Response</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03-request-response/01-request.html"><strong aria-hidden="true">3.1.</strong> The Request struct</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.2.</strong> Response and the ResponseBuilder</div></li></ol></li><li class="chapter-item expanded "><a href="04-state/00-intro.html"><strong aria-hidden="true">4.</strong> State</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04-state/01-server_state.html"><strong aria-hidden="true">4.1.</strong> Server State</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.2.</strong> Request State</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> Middleware</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tide in Practice</li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Testing Tide Applications</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> Deploying Tide Applications</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> Bare-bones deployment</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> Deploying behind a reverse-proxy</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.3.</strong> Containerizing a Tide Application</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> JSON Web Services with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> HTTP Websites with Tide</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> Using Tide with a Database</div></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="further-reading.html">Further reading</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,6 +169,8 @@
 <p>Tide is a minimal and pragmatic Rust web application framework built for
 rapid development. It comes with a robust set of features that make building
 async web applications and APIs easier and more fun.</p>
+<p>This Tide-book is still a work in progress, and will be expanded on over time.</p>
+<p>All examples in the text are available as <a href="https://github.com/http-rs/tide-book/tree/main/examples">working Tide-projects</a></p>
 <h1><a class="header" href="#getting-started" id="getting-started">Getting started</a></h1>
 <p>In order to build a web app in Rust you need an HTTP server, and an async
 runtime. After running <code>cargo new --bin web-app</code> add the following lines to your
@@ -215,7 +217,7 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
 <p>The central part of a Tide application is the <code>Server</code> struct. A Tide application is started by creating a
 <code>Server</code> and configuring it with <code>Route</code>s to <code>Endpoint</code>s.
 When a <code>Server</code> is started it will handle incoming <code>Request</code>s by matching their URLs with Routes. Requests that match a route are then  dispatched to the corresponding <code>Endpoint</code>.</p>
-<h2><a class="header" href="#set-up-a-server" id="set-up-a-server">Set up a Server</a></h2>
+<h1><a class="header" href="#set-up-a-server" id="set-up-a-server">Set up a Server</a></h1>
 <p>A basic Tide <code>Server</code> is constructed with <code>tide::new()</code>.</p>
 <pre><pre class="playground"><code class="language-rust edition2018 no_run">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
@@ -232,7 +234,7 @@ async fn main() -&gt; tide::Result&lt;()&gt; {
 }
 </code></pre></pre>
 <p>While this is the simpelest Tide application that you can build, it is not very useful. It will return a 404 HTTP response to any request. To be able to return anything useful we will need to handle requests using one or more <code>Endpoint</code>s</p>
-<h2><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with endpoints</a></h2>
+<h1><a class="header" href="#handle-requests-with-endpoints" id="handle-requests-with-endpoints">Handle requests with endpoints</a></h1>
 <p>To make the <code>Server</code> return anything other than an HTTP 404 reply we need to tell it how to react to requests. We do this by adding one or more Endpoints;</p>
 <pre><pre class="playground"><code class="language-rust edition2018 no_run">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
@@ -287,7 +289,7 @@ async fn endpoint(_req: tide::Request&lt;()&gt;) -&gt; Result&lt;Response&gt; {
     Ok(Response::new(StatusCode::Ok).set_body(&quot;Hello world&quot;.into()))
 }
 </code></pre></pre>
-<h2><a class="header" href="#defining-and-composing-routes" id="defining-and-composing-routes">Defining and composing routes</a></h2>
+<h1><a class="header" href="#defining-and-composing-routes" id="defining-and-composing-routes">Defining and composing routes</a></h1>
 <p>The server we built is still not very useful. It will return the same response for any URL. It is only able to differentiate between requests by HTTP method. We already used the <code>.at</code> method of the <code>Server</code> to define a wildcard route. You might have guessed how to add endpoints to specific routes;</p>
 <pre><pre class="playground"><code class="language-rust edition2018 no_run">#[async_std::main]
 async fn main() -&gt; tide::Result&lt;()&gt; {
@@ -348,7 +350,7 @@ fn set_v2_routes(route: Route) {
 Both wildcard characters will match route segments. Segments are the pieces of a route that are separated with slashes. <code>:</code> will match exactly one segment while '*' will match one or more segments.</p>
 <p><code>&quot;/foo/*/baz&quot;</code> for example will match against <code>&quot;/foo/bar/baz&quot;</code> or <code>&quot;/foo/bar/qux/baz&quot;</code></p>
 <p>&quot;foo/:/baz&quot; will match &quot;/foo/bar/baz&quot; but not &quot;/foo/bar/qux/baz&quot;, the latter has two segments between foo and baz, while <code>:</code> only matches single segments.</p>
-<h3><a class="header" href="#naming-wildcards" id="naming-wildcards">Naming wildcards</a></h3>
+<h3><a class="header" href="#named-wildcards" id="named-wildcards">Named wildcards</a></h3>
 <p>It is also possible to name wildcards. This allows you to query the specific strings the wildcard matched on. For example <code>&quot;/:bar/*baz&quot;</code> 
 will match the string <code>&quot;/one/two/three&quot;</code>. You can then query which wildcards matched which parts of the string. In this case <code>bar</code> matched <code>one</code> while <code>baz</code> matched <code>two/three</code>. We'll see how you can use this to parse parameters from urls in the next chapter.</p>
 <h3><a class="header" href="#wildcard-precedence" id="wildcard-precedence">Wildcard precedence</a></h3>
@@ -365,10 +367,10 @@ will match the string <code>&quot;/one/two/three&quot;</code>. You can then quer
 <p>The <code>Request</code> object contains all the information from the HTTP request that was received by the server. The URL from the request, HTTP headers, cookies and query string parameters can all be found in the <code>Request</code>.
 Additionally the <code>Request</code> object in Tide is used to pass information about the application state and the request state into the endpoint. We will look into this in the next chapter about <code>State</code>.</p>
 <p>The <code>Response</code> struct in turn allows us to craft a complete HTTP response. It contains the <code>Response</code> body, but also a set of HTTP headers and a response code. While the <code>Response</code> struct can be created, accessed and modified directly, it can be convenient to create a <code>Response</code> through the Tide <code>ResponseBuilder</code>.</p>
-<h2><a class="header" href="#request" id="request">Request</a></h2>
+<h1><a class="header" href="#request" id="request">Request</a></h1>
 <p>The Tide <code>Request</code> struct is the input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state. In most simple examples we will not use this state and you will see <code>Request&lt;()&gt;</code>.</p>
-<h3><a class="header" href="#request-body" id="request-body">Request body</a></h3>
-<h3><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h3>
+<h2><a class="header" href="#request-body" id="request-body">Request body</a></h2>
+<h2><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h2>
 <p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
 <p>From any route with named wildcards like this;</p>
 <pre><code class="language-rust ignore">    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
@@ -383,14 +385,17 @@ Additionally the <code>Request</code> object in Tide is used to pass information
     .into())
 }
 </code></pre>
-<h3><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h3>
-<h3><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h3>
-<h2><a class="header" href="#response-and-the-responsebuilder" id="response-and-the-responsebuilder">Response and the ResponseBuilder</a></h2>
-<h1><a class="header" href="#server-and-request-state" id="server-and-request-state">Server and request state</a></h1>
-<h2><a class="header" href="#server-state" id="server-state">Server State</a></h2>
-<p>Until now endpoints were simple stateless functions that processed a request into a response. But for any serious application we would need to be able to maintain some state somewhere. In a real life application we would need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables to do this.</p>
-<p>Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called <code>State</code>. Because we've been creating <code>Server</code>s with the <code>Server::new</code> factory method so far we have been using <code>Server&lt;()&gt;</code>. But we can pass in our own state struct or enum when creating the Server. This will then be passed into all endpoint handlers through the <code>Request</code>.</p>
-<h3><a class="header" href="#set-up-state-for-an-application" id="set-up-state-for-an-application">Set up state for an application</a></h3>
+<h2><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h2>
+<h2><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h2>
+<h1><a class="header" href="#state" id="state">State</a></h1>
+<p>Tide allows us to use two types of state. The <code>Server</code> state is instantiated when the application is started. It can be used to maintain the application state and is available in all Middleware and Endpoints. This is the ideal place to keep database connection pools, application configuration, cached data or session stores. The <code>Server</code> state is passed to all middleware and endpoint calls, and those might happen on different threads so there are some restrictions to what types can be used, expressed in a couple of trait bounds.</p>
+<p>Tide also provides <code>Request</code> state. As the name implies this state is unique for each <code>Request</code> and is lost once a request is handled. Why this type of state might be useful will become clear in the next chapter about <code>Middleware</code>
+<code>Request</code> state is available as a type-map on the <code>Request</code> struct. Variables can be stored in the <code>Request</code> and can be retrieved by their type. </p>
+<p>Multiple pieces of <code>Request</code> state can be stored in a request, as long as they have different types. The application state is always one instance of a type. Of course this type can have many fields to store as much application state as you need.</p>
+<h1><a class="header" href="#server-state" id="server-state">Server State</a></h1>
+<p>Until now endpoints were simple stateless functions that process requests into a responses. But for any serious application we need to be able to maintain state somewhere. In a real life application we need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables for this.</p>
+<p>Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called <code>State</code>. We've been using <code>Server::new</code> to construct our <code>Server</code> instances, which returns a server without state; <code>Server&lt;()&gt;</code>. But the <code>Server</code> type also has a <code>Server::with_state</code> constructor where you can pass in our own state instance when creating the Server. This State will then be passed to all endpoint handlers through the <code>Request</code> parameter.</p>
+<h2><a class="header" href="#setup-state-for-an-application" id="setup-state-for-an-application">Setup state for an application</a></h2>
 <p>To set up our application state we first need to have a type to store the application data that will be shared between requests.</p>
 <pre><code class="language-rust ignore">#[derive(Clone)]
 struct AppState {
@@ -403,7 +408,8 @@ struct AppState {
         datastore: Arc::new(AtomicU32::new(0)),
     });
 </code></pre>
-<h3><a class="header" href="#accessing-state" id="accessing-state">Accessing state</a></h3>
+<h2><a class="header" href="#accessing-state" id="accessing-state">Accessing state</a></h2>
+<p>The state can then be accessed using the <code>state</code> method on your <code>Request</code> inside your endpoints;</p>
 <pre><code class="language-rust ignore">async fn read_state(request: Request&lt;AppState&gt;) -&gt; tide::Result {
     Ok(format!(
         &quot;datastore has been updated {} times&quot;,
@@ -418,16 +424,11 @@ struct AppState {
     Ok(&quot;datastore updated&quot;.into())
 }
 </code></pre>
-<h3><a class="header" href="#state-limitations" id="state-limitations">State limitations</a></h3>
-<p>As you can see in the previous example the <code>State</code> object does have some limitations. First of all Tide sets some trait bounds. The <code>State</code> needs to be <code>Clone</code>, <code>Send</code> and <code>Sync</code>. This is because it will be passed into all your endpoints. These might be running concurrently and on different threads than where you created the <code>State</code></p>
-<p>The <code>State</code> is also returned as a non-mutable reference.</p>
+<h2><a class="header" href="#server-state-limitations" id="server-state-limitations">Server state limitations</a></h2>
+<p>As you can see in the previous example the <code>State</code> object does have some limitations. First of all Tide sets some trait bounds. The <code>State</code> needs to be <code>Clone</code>, <code>Send</code> and <code>Sync</code>. This is because it will be passed into all your endpoints, these might be running concurrently on different threads than where you created the <code>State</code>
+When accessing <code>State</code> in your endpoints it's only available as a non-mutable reference.</p>
 <p>To get around these limitations for our counter we used an AtomicU32 that provides the internal mutability for our counter and we wrapped it in an <code>Arc</code> to be able to copy it around.</p>
 <p>In practice this is often not that much of a problem. Many database-access libraries for example already provide connection pools components that are written to be able to be passed around inside an application like this. <TODO>point at an sqlx examle</TODO></p>
-<h1><a class="header" href="#middleware" id="middleware">Middleware</a></h1>
-<h1><a class="header" href="#testing" id="testing">Testing</a></h1>
-<h2><a class="header" href="#testing-endpoints" id="testing-endpoints">Testing endpoints</a></h2>
-<h2><a class="header" href="#testing-routes" id="testing-routes">Testing routes</a></h2>
-<h2><a class="header" href="#middleware-testing" id="middleware-testing">Middleware testing</a></h2>
 <h1><a class="header" href="#further-reading" id="further-reading">Further reading</a></h1>
 <p>These articles from the Tide team give a nice peek behind the curtains into the motivations and ideas behind the framework;</p>
 <ul>

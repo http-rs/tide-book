@@ -1,10 +1,9 @@
 # Summary
 
-[Introduction](./01-introduction/00-introduction.md)
-[Getting Started](./01-introduction/01-getting_started.md)
-[Example](./01-introduction/02-example.md)
----
+[Introduction](./introduction/00-introduction.md)
+[Getting Started](./introduction/01-getting_started.md)
 
+---
 # Tide Basics
 - [Anatomy of a Tide application]()
 - [Server, Routes and Endpoints](./02-server_routes_endpoints/00-intro.md)

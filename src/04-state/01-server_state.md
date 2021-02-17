@@ -1,9 +1,9 @@
 # Server State
-Until now endpoints were simple stateless functions that processed a request into a response. But for any serious application we would need to be able to maintain some state somewhere. In a real life application we would need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables to do this.
+Until now endpoints were simple stateless functions that process requests into a responses. But for any serious application we need to be able to maintain state somewhere. In a real life application we need to have a place to store things like sessions, database connection pools, configuration etc. And we would rather not use global variables for this.
 
-Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called `State`. Because we've been creating `Server`s with the `Server::new` factory method so far we have been using `Server<()>`. But we can pass in our own state struct or enum when creating the Server. This will then be passed into all endpoint handlers through the `Request`.
+Tide gives us Server state to do just this. If you look at the definition of the Server struct you see that it has one generic type parameter called `State`. We've been using `Server::new` to construct our `Server` instances, which returns a server without state; `Server<()>`. But the `Server` type also has a `Server::with_state` constructor where you can pass in our own state instance when creating the Server. This State will then be passed to all endpoint handlers through the `Request` parameter.
 
-## Set up state for an application
+## Setup state for an application
 To set up our application state we first need to have a type to store the application data that will be shared between requests.
 ```rust,ignore
 {{#include ../../examples/ch04-server-state/src/main.rs:appstate}}

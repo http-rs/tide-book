@@ -13,7 +13,7 @@
 - [Request and Response](./03-request-response/00-request-response.md)
   - [The Request struct](./03-request-response/01-request.md)
   - [Response and the ResponseBuilder]()
-- [State]()
+- [State](./04-state/00-intro.md)
   - [Server State](./04-state/01-server_state.md)
   - [Request State]()
 - [Middleware]()

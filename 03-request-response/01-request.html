@@ -164,8 +164,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#request" id="request">Request</a></h1>
-<p>The Tide <code>Request</code> struct is the input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state. In most simple examples we will not use this state and you will see <code>Request&lt;()&gt;</code>.</p>
+<p>The Tide <code>Request</code> struct is the input to your endpoint handler functions. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state.</p>
 <h2><a class="header" href="#request-body" id="request-body">Request body</a></h2>
+<p>The <code>Request</code> provides a set of methods to access the <code>Request</code> body. <code>body_string</code>, <code>body_bytes</code> and <code>body_json</code> allow you to read the request body either as a string, as binary data or parse it as json data.
+There are a couple of things to keep in mind here. First of all is that, because a request body can be a sizable piece of data, these methods work asynchronously and can only be called once.
+The <code>body_json</code> is generic over its return type. Json data can be parsed into any type that implements (or derives) <code>serde::Deserialize</code>.</p>
+<h2><a class="header" href="#query-parameters" id="query-parameters">Query parameters</a></h2>
 <h2><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h2>
 <p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
 <p>From any route with named wildcards like this;</p>
@@ -181,8 +185,7 @@
     .into())
 }
 </code></pre>
-<h2><a class="header" href="#the-query-string-and-query-parameters" id="the-query-string-and-query-parameters">The query string and query parameters</a></h2>
-<h2><a class="header" href="#http-request-headers" id="http-request-headers">HTTP request headers</a></h2>
+<h2><a class="header" href="#http-headers" id="http-headers">HTTP headers</a></h2>
 
                     </main>
 

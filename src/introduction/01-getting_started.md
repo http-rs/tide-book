@@ -21,13 +21,16 @@ with a confirmation message.
 
 ```sh
 $ curl localhost:8080/orders/shoes -d '{ "name": "Chashu", "legs": 4 }'
+Hello, Chashu! I've put in an order for 4 shoes
 ```
 
-Hello, Chashu! I've put in an order for 4 shoes
+Let's try now with an invalid number of legs (**Note** that we use the `-v` flag to use curl in verbose mode).
 
 ```sh
-$ curl localhost:8080/orders/shoes -d '{ "name": "Mary Millipede", "legs": 750 }'
+$ curl -v localhost:8080/orders/shoes -d '{ "name": "Mary Millipede", "legs": 750 }'
+< HTTP/1.1 422 Unprocessable Entity
+< content-length: 0
+< date: Fri, 26 Feb 2021 13:31:17 GMT
 ```
 
-number too large to fit in target type
-
+We get an http error, 422 to be more specific, and that is because we are using the `body_json` method to `deseriaize` the body into the `Animal` struct and the `legs` fields type is `u8`. We will cover `body_json` and the other available methods for `deserialize` the body in the [Request/Response chapter](../03-request-response/01-request.md).

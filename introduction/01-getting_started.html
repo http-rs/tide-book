@@ -200,11 +200,15 @@ async fn order_shoes(mut req: Request&lt;()&gt;) -&gt; tide::Result {
 }
 </code></pre></pre>
 <pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Chashu&quot;, &quot;legs&quot;: 4 }'
+Hello, Chashu! I've put in an order for 4 shoes
 </code></pre>
-<p>Hello, Chashu! I've put in an order for 4 shoes</p>
-<pre><code class="language-sh">$ curl localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+<p>Let's try now with an invalid number of legs (<strong>Note</strong> that we use the <code>-v</code> flag to use curl in verbose mode).</p>
+<pre><code class="language-sh">$ curl -v localhost:8080/orders/shoes -d '{ &quot;name&quot;: &quot;Mary Millipede&quot;, &quot;legs&quot;: 750 }'
+&lt; HTTP/1.1 422 Unprocessable Entity
+&lt; content-length: 0
+&lt; date: Fri, 26 Feb 2021 13:31:17 GMT
 </code></pre>
-<p>number too large to fit in target type</p>
+<p>We get an http error, 422 to be more specific, and that is because we are using the <code>body_json</code> method to <code>deseriaize</code> the body into the <code>Animal</code> struct and the <code>legs</code> fields type is <code>u8</code>. We will cover <code>body_json</code> and the other available methods for <code>deserialize</code> the body in the <a href="../03-request-response/01-request.html">Request/Response chapter</a>.</p>
 
                     </main>
 

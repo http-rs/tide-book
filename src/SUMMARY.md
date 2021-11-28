@@ -12,7 +12,7 @@
   - [Defining and composing routes](./02-server_routes_endpoints/03-routes.md)
 - [Request and Response](./03-request-response/00-request-response.md)
   - [The Request struct](./03-request-response/01-request.md)
-  - [Response and the ResponseBuilder](./03-request-response/01-response.md)
+  - [Response and the ResponseBuilder](./03-request-response/02-response.md)
 - [State](./04-state/00-intro.md)
   - [Server State](./04-state/01-server_state.md)
   - [Request State]()

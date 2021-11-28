@@ -167,14 +167,13 @@
 <p>The Tide <code>Request</code> struct is the input to your endpoint handler function. It contains all the data from the HTTP request but it is also used by Tide to pass in the application and request <code>State</code>. We will look at this in more detail in the next chapter. For now it is enough to know that the <code>State</code> generic type parameter of the <code>Request&lt;State&gt;</code> type you will see everywhere is the application state.</p>
 <h2><a class="header" href="#request-body" id="request-body">Request body</a></h2>
 <p>The <code>Request</code> provides a set of methods to access the <code>Request</code> body. <code>body_string</code>, <code>body_bytes</code> and <code>body_json</code> allow you to read the request body either as a string, as binary data or parse it as json data.
-There are a couple of things to keep in mind here. First of all is that, because a request body can be a sizable piece of data, these methods work asynchronously and can only be called once.
-The <code>body_json</code> is generic over its return type. Json data can be parsed into any type that implements (or derives) <code>serde::Deserialize</code>.</p>
+There are a couple of things to keep in mind here. First of all, because a request body can be a sizable piece of data, these methods work asynchronously and can only be called once.</p>
+<p>The <code>body_json</code> is generic over its return type. Json data can be parsed into any type that implements (or derives) <code>serde::Deserialize</code>.</p>
 <h2><a class="header" href="#accessing-url-parameters" id="accessing-url-parameters">Accessing Url parameters</a></h2>
-<p>In the last chapter where we talked about matching Url routes and specifically in the paragraph about wildcards we already mentioned Url-parameters.</p>
-<p>From any route with named wildcards like this;</p>
+<p>In the previous chapter we showed how to use wildcards to match routes. These wildcards can be used to pass parameters into an endpoint as part of the url. To do this you first need to define a route with one or more named wildcards like this;</p>
 <pre><code class="language-rust ignore">    app.at(&quot;/url_params/:some/:parameters&quot;).get(url_params);
 </code></pre>
-<p>Any value that was used to match the a wildcard can be retrieved using the <code>request.param</code> method;</p>
+<p>This route defines the <em>some</em> and <em>parameters</em> wildcards. These can then be retrieved from the <code>Request</code> using the <code>Request::param</code> method like this;</p>
 <pre><code class="language-rust ignore">async fn url_params(request: Request&lt;()&gt;) -&gt; tide::Result {
     Ok(format!(
         &quot;Hello, the url contained {} and {}&quot;,

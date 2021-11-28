@@ -29,12 +29,15 @@ async fn url_params(request: Request<()>) -> tide::Result {
 }
 // ANCHOR_END: url-params-handler
 
+// ANCHOR: query-string-struct
 #[derive(Deserialize)]
 struct Query {
     pub parameter1: String,
     pub parameter2: i32,
 }
+// ANCHOR_END: query-string-struct
 
+// ANCHOR: query-string-struct-parse
 async fn query_params(request: Request<()>) -> tide::Result {
     let query: Query = request.query()?;
 
@@ -44,7 +47,9 @@ async fn query_params(request: Request<()>) -> tide::Result {
     )
     .into())
 }
+// ANCHOR_END: query-string-struct-parse
 
+// ANCHOR: query-string-hashmap
 async fn simple_query(request: Request<()>) -> tide::Result {
     let query: HashMap<String, String> = request.query()?;
 
@@ -54,3 +59,4 @@ async fn simple_query(request: Request<()>) -> tide::Result {
     )
     .into())
 }
+// ANCHOR_END: query-string-hashmap
